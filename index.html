@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CW1 Assets</title>
-    <link rel="icon" type="image/x-icon" href="/New Project (12) (1).png">
+<link rel="icon" type="image/x-icon" href="/New Project (12) (1).png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
         padding: 0;
         box-sizing: border-box;
         background-color: black;
-        color: black;
+        color: white;
     }
     .navbar {
         position: fixed;
@@ -40,7 +40,7 @@
     }
     .navbar img {
         height: 40px; /* Increased the height of the logo */
-        filter: invert(100%)
+        filter: invert(100%);
     }
     .nav-links {
         display: flex;
@@ -50,9 +50,6 @@
     .content {
         padding: 100px 20px; /* Adjusted padding to ensure content is not hidden behind the navbar */
         text-align: center;
-color: white;
-        background-color: ;
-
     }
     .content h1 {
         font-weight: 100;
@@ -75,38 +72,6 @@ color: white;
         background-color: #FF5555;
     }
 </style>
-    <p id="demo"></p>
-
-<script>
-
-var countDownDate = new Date("Aug 16th, 2024 12:00:00").getTime();
-
-
-var x = setInterval(function() {
-
- 
-  var now = new Date().getTime();
-
-  
-  var distance = countDownDate - now;
-
-  
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "Soon...";
-  }
-}, 1000);
-</script>
 </head>
 <body>
 <div class="navbar">
@@ -125,8 +90,32 @@ var x = setInterval(function() {
     <h1>ASSETS FOR ALL GAMES</h1>
     <p></p>
     <h3>COMING SOON</h3>
-    <p id="demo></p>
+    <p id="demo"></p>
     
 </div>
+
+<script>
+var countDownDate = new Date("Aug 16, 2024 12:00:00").getTime();
+
+var x = setInterval(function() {
+
+  var now = new Date().getTime();
+  var distance = countDownDate - now;
+
+  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+  + minutes + "m " + seconds + "s ";
+
+  if (distance < 0) {
+    clearInterval(x);
+    document.getElementById("demo").innerHTML = "Soon...";
+  }
+}, 1000);
+</script>
+
 </body>
 </html>
