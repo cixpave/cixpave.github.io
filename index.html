@@ -10,8 +10,15 @@
     <link rel="stylesheet" type="text/css" href="/add_to_homescreen/style/addtohomescreen.css">
     <script type="text/javascript" src="/add_to_homescreen/src/addtohomescreen.js"></script>
 
-
-    
+<script>
+    if (
+    (("standalone" in window.navigator) && !window.navigator.standalone)
+    ||
+    ( !window.matchMedia('(display-mode: standalone)').matches)
+) {
+    addToHomescreen();
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <meta name="mobile-web-app-capable" content="yes"> ‹meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes" />
