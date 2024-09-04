@@ -10,32 +10,16 @@
     <meta property="og:type" content="website" />
 
     <meta property="og:image" content="/New Project (12) (1).png" />
-
-
-
     <meta property="og:site_name" content="CW1 Assets" />
     <meta property="og:locale" content="en_US" />
-
     
 <link rel="icon" type="image/x-icon" href="/New Project (12) (1).png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" type="text/css" href="/add_to_homescreen/style/addtohomescreen.css">
-    <script type="text/javascript" src="/add_to_homescreen/src/addtohomescreen.js"></script>
-
-<script>
-    if (
-    (("standalone" in window.navigator) && !window.navigator.standalone)
-    ||
-    ( !window.matchMedia('(display-mode: standalone)').matches)
-) {
-    addToHomescreen();
-}
-</script>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <meta name="mobile-web-app-capable" content="yes"> ‹meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="mobile-web-app-capable" content="yes" /> ‹meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="mobile-web-app-capable" content="yes"> 
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="apple-mobile-web-app-title" content="CW1 Assets">
 <style>
     body {
@@ -76,13 +60,13 @@
         margin-right: 20px; /* Add space to the right of the links container */
     }
     .content {
-        height: 1080px;
         padding: 100px 20px; /* Adjusted padding to ensure content is not hidden behind the navbar */
         text-align: center;
-        background-image: url("New Project (17).png");
+        background-image: url("/mnt/data/image.png");
         background-size: cover; /* Adjust to fit the image within the element */
         background-repeat: no-repeat; /* Prevents the image from repeating */
         background-position: center; /* Centers the image */
+        height: 1080px;
     }
     .content h1 {
         font-weight: 100;
@@ -107,109 +91,24 @@
 </style>
 </head>
 <body>
-    <script>
-
-        const express = require("express");
-const app = express();
-const port = process.env.PORT || 3000;
-
-
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-
-// Sample store data (replace with your actual data)
-const storeItems = [
-  {
-    id: 1,
-    name: "Clocking System",
-    price: 54,
-    image: 16141263907,
-    purchase: 1742823251,
-    desc: "Get the most out of your employees! Be able to know when they check in and take breaks. Inspired by Kybo's Clock In system its just that I built it quicker than them lol.(Exact same thing)",
-  },
-  {
-    id: 2,
-    name: "Item 2",
-    price: 30,
-    image: 16072285822,
-    purchase: 4,
-    desc: "LALALALL",
-  },
-  {
-    id: 3,
-    name: "Hello",
-    price: 30,
-    image: 16072285822,
-    purchase: 4,
-    desc: "LALALALL",
-  },
-  // Add more items as needed
-];
-
-// Endpoint to provide item data
-app.get("/getitems", (req, res) => {
-  res.json(storeItems);
-});
-
-
-
- 
-
-app.get("/", (req, res) => {
-  res.send("Hello, Glitch!");
-});
-
-app.listen(port, () => {
-  console.log(`Server is running at http://localhost:${port}`);
-});
-    </script>
 <div class="navbar">
     <a href="#">
         <img src="/New Project (12) (2).png" alt="Logo">
     </a>
-    <!-- <div class="nav-links">
+    <div class="nav-links">
         <a href="">Home</a>
         <a href="./shop">Shop</a>
-        <a href="t">About</a>
-    </div> -->
+        <a href="./about">About</a>
+    </div>
 </div>
 
 <div class="content">
-    <p></p>
-    <p></p>
     <h1>ASSETS FOR ALL GAMES</h1>
-    <p></p>
-    <h3>COMING SOON</h3>
-    <p id="demo"></p>
-    <p></p>
+    <a href="#" class="btn">SHOP NOW</a>
     <footer>
         <h3><i>@CIXPAVE</i></h3>
     </footer>
 </div>
-
-<script>
-var countDownDate = new Date("Aug 16, 2024 12:00:00").getTime();
-
-var x = setInterval(function() {
-
-  var now = new Date().getTime();
-  var distance = countDownDate - now;
-
-  var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-  var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-  var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-  + minutes + "m " + seconds + "s ";
-
-  if (distance < 0) {
-    clearInterval(x);
-    document.getElementById("demo").innerHTML = "Soon...";
-  }
-}, 1000);
-</script>
 
 </body>
 </html>
