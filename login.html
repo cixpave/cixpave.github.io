@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Login Page</title>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .split-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Login Form */
+        .left-side {
+            width: 50%;
+            background-color: #f8f8f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .left-side h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .left-side input {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .left-side button {
+            width: 80%;
+            padding: 12px;
+            background-color: #131212;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .left-side button:hover {
+            background-color: #131212;
+        }
+
+        /* Right Side: Particles */
+        .right-side {
+            width: 50%;
+            background-color: #131212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .right-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+
+        .right-content h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+
+        .right-content p {
+            font-size: 1rem;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+        .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+    
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10% 19%;
+        z-index: 1000;
+    }
+    .navbar img {
+        height: 80px;
+        filter: invert(100%);
+    }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="index.html">
+            <img src="New Project (12) (2).png" alt="Logo">
+        </a>
+    </div>
+    <div class="split-container">
+        <!-- Left Side: Login Form -->
+        <div class="left-side">
+            <h2>Sign In</h2>
+            <input type="text" placeholder="Email">
+            <input id="password" type="password" placeholder="Password">
+            <button onclick="checkPassword()">Sign In</button>
+            <br>
+            <a>Forgot your password?</a>
+        </div>
+
+        <!-- Right Side: Particles -->
+        <div class="right-side">
+            <div id="particles-js"></div>
+            <div class="right-content">
+                <h2>Welcome back!</h2>
+                <p>Login with your credentials to continue.</p>
+            </div>
+            
+        </div>
+    </div>
+        
+    <!-- Particle.js Script -->
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 100,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": { "value": "#ffffff" },
+                "shape": {
+                    "type": "circle",
+                    "stroke": { "width": 0, "color": "#000000" },
+                    "polygon": { "nb_sides": 5 }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": { "enable": false, "speed": 1 }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": { "enable": false }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ffffff",
+                    "opacity": 0.4,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 3,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": { "enable": true, "mode": "repulse" },
+                    "onclick": { "enable": true, "mode": "push" },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": { "distance": 400, "line_linked": { "opacity": 1 } },
+                    "bubble": { "distance": 400, "size": 40, "duration": 2 },
+                    "repulse": { "distance": 200, "duration": 0.4 },
+                    "push": { "particles_nb": 4 }
+                }
+            },
+            "retina_detect": true
+        });
+
+        function checkPassword() {
+            const passwordInput = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            if (passwordInput === "6PAVE") {
+    window.open(
+        "http://www.google.com", 
+        "MyPopup",               
+        "width=600,height=300,left=200,top=200" 
+    );
+} else {
+    errorMessage.style.display = "block";
+}
+
+        }
+    </script>
+</body>
+</html>
