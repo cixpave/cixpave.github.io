@@ -4,11 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CW1 Courses</title>
+    <meta property="og:title" content="Your Website Title" />
+    <meta property="og:description" content="A brief description of your website." />
+    <meta property="og:url" content="https://yourwebsite.com" />
+    <meta property="og:type" content="website" />
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <meta property="og:image" content="New Project (12) (1).png" />
-    <meta property="og:site_name" content="CW1 Courses" />
+    <meta property="og:site_name" content="CW1 Assets" />
     <meta property="og:locale" content="en_US" />
     
 <link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
@@ -18,7 +22,7 @@
 <meta name="mobile-web-app-capable" content="yes"> 
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="CW1 Courses">
+<meta name="apple-mobile-web-app-title" content="CW1 Assets">
 <style>
     body {
         font-family: 'Montserrat', sans-serif;
@@ -29,7 +33,55 @@
         overflow: hidden; /* Prevent page overflow */
     }
 
-   
+        /* Popup Overlay */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999; /* Ensure popup is above all content */
+        }
+
+        /* Popup Content */
+        .popup-content {
+            background-color: #222;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content h2 {
+            margin-bottom: 15px;
+            color: #FF5555;
+        }
+
+        .popup-content input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .popup-content button {
+            background-color: #FF5555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .popup-content button:hover {
+            background-color: #FF2222;
+        }
     .navbar {
         position: fixed;
         top: 0;
@@ -95,7 +147,53 @@
         background-color: #131212;
         z-index: 1; /* Below container */
     }
+    @media screen and (max-width: 768px) {
+    .split-container {
+        flex-direction: column;
+    }
+    
+    .left-side, .right-side {
+        width: 100%;
+        height: 50vh;
+    }
+    
+    .navbar {
+        padding: 15px;
+    }
+    
+    .navbar img {
+        height: 40px;
+    }
+    
+    .left-side h2 {
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+    
+    .left-side input {
+        width: 90%;
+        padding: 15px;
+        margin: 8px 0;
+    }
+    
+    .left-side button {
+        width: 90%;
+        margin-top: 15px;
+    }
+    
+    .right-content h2 {
+        font-size: 1.8rem;
+    }
+    
+    .right-content p {
+        font-size: 0.9rem;
+        padding: 0 20px;
+    }
+}
+
 </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#131212">
 
 </head>
 
@@ -104,14 +202,32 @@
     <a href="#">
         <img src="New Project (12) (2).png" alt="Logo">
     </a>
-    
+    <div class="nav-links">
+        <a href="">Home</a>
+        
+    </div>
 </div>
 <div id="particles-js"></div>
 <div class="container">
     <div class="content">
         <h2>Coding courses from Python, JavaScript, and more!</h2>
         <a href="login.html" class="btn">Get Started</a>
-        
+        <script>
+            // JavaScript for Password Protection
+            const correctPassword = "mySecretPassword"; // Replace with your desired password
+    
+            function checkPassword() {
+                const userInput = document.getElementById("password-input").value;
+                if (userInput === correctPassword) {
+                    // If password is correct, hide popup and show content
+                    document.getElementById("password-popup").style.display = "none";
+                    document.getElementById("protected-content").style.display = "block";
+                } else {
+                    // Alert on incorrect password
+                    alert("Incorrect Password. Please try again.");
+                }
+            }
+        </script>
         
     </div>
 </div>
