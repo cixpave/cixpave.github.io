@@ -1,5 +1,6 @@
-html{
-    
+
+:root {
+    --speed: 1;
 }
 body {
 background-color: black;
@@ -13,6 +14,57 @@ background-color: black;
     background-image: radial-gradient(circle, #ffffff2a 1px, rgba(255, 255, 255, 0.035) 1px);
 }
 
+.start {
+    animation: exit 2s ease-out forwards;
+    animation-delay: 10s;
+}
+
+@keyframes exit {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.floatText {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 20px;
+    
+    opacity: 0%;
+    left: 50%;
+    animation: fadeAfter 2s ease-in-out forwards;
+    animation-delay: 8s;
+    position: absolute;
+    transform: translate(-50%, -50%)
+  }
+
+  @keyframes fadeAfter {
+    
+    0% {
+        opacity: 0;
+        top: 100%;
+    }    
+    100% {
+        opacity: 1;
+        top: 95%;
+    }
+  }
+
+  .loader {
+    border: 3px solid #f3f3f36f; /* Light grey */
+    border-top: 3px solid #020202; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 .animated-image {
     position: absolute;
     left: 50%;
@@ -57,5 +109,36 @@ background-color: black;
         top: 20%;
     }
   }
+
+  
+  .animated-profile {
+    position: absolute;
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    animation: fadeAndRise 6s ease-in-out forwards;
+    
+    /* Improved sizing logic */
+    width: 5%; /* Use viewport width units for viewport-relative scaling */
+    min-width: 60px; /* Absolute minimum size */
+    max-width: 300px; /* Absolute maximum size */
+    height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* Desktop-specific adjustments */
+  @media screen and (min-width: 1024px) {
+    .animated-profile {
+      width: 10vw; /* Slightly smaller relative size */
+    }
+  }
+  
+  /* Mobile-first fallback */
+  @media screen and (max-width: 480px) {
+    .animated-profile {
+      width: 25vw; /* Larger relative size on mobile */
+      max-width: 200px; /* Smaller absolute maximum */
+    }
+  }
+ 
 
   
