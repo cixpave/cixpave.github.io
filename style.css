@@ -139,6 +139,13 @@ background-color: black;
       max-width: 200px; /* Smaller absolute maximum */
     }
   }
- 
+
+.profile {
+  top: 25%;
+  left: 50%;
+position: absolute;  }
+ .img-prf {
+  border-radius: 10px;
+ }
 
   
