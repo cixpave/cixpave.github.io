@@ -1,8 +1,8 @@
 html{
-    background-color: black;
+    
 }
 body {
-
+background-color: black;
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
@@ -11,13 +11,35 @@ body {
     overflow: hidden; /* Prevent page overflow */
 }
 
-  .animated-image {
+.animated-image {
     position: absolute;
     left: 50%;
     opacity: 0;
     transform: translate(-50%, -50%);
     animation: fadeAndRise 6s ease-in-out forwards;
+    
+    /* Improved sizing logic */
+    width: 5%; /* Use viewport width units for viewport-relative scaling */
+    min-width: 60px; /* Absolute minimum size */
+    max-width: 300px; /* Absolute maximum size */
+    height: auto; /* Maintain aspect ratio */
   }
+  
+  /* Desktop-specific adjustments */
+  @media screen and (min-width: 1024px) {
+    .animated-image {
+      width: 10vw; /* Slightly smaller relative size */
+    }
+  }
+  
+  /* Mobile-first fallback */
+  @media screen and (max-width: 480px) {
+    .animated-image {
+      width: 25vw; /* Larger relative size on mobile */
+      max-width: 200px; /* Smaller absolute maximum */
+    }
+  }
+  
 
   @keyframes fadeAndRise {
     0% {
@@ -33,3 +55,5 @@ body {
         top: 20%;
     }
   }
+
+  
