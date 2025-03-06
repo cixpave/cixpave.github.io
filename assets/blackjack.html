@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<meta charset="utf-8">
+    <title>BlackJack</title>
+  </head>
+  <body onload="start();">
+  	<script type="text/javascript" src="subclass.js"></script>
+    <script type="text/javascript">
+    
+    var SPADE  = 1;
+    var DIAMOND= 2;
+    var CLOVER = 3;
+    var HEART  = 4;
+    var CardAttribute = new Array(SPADE, DIAMOND, CLOVER, HEART);
+    
+    var STARTBEF = 0
+    var USERTURN = 1;
+    var DEALERTURN = 2;
+    var GAMEEND = 3;
+    
+	var Card = Object.subClass({
+		number:"",
+		attribute:"",
+		init:function(number, attribute){
+			this.number = number;
+			this.attribute = attribute;
+		},
+		getNumber:function(){
+			return this.number;
+		}
+	});
+	
+	var CardDeck = Object.subClass({
+		cards:"",
+		init:function(cards){
+			this.cards=cards;
+		},
+		take:function(number){
+			var ret = new Array();
+			for(var i=0; i<number; i++){
+				ret.push(this.cards.pop());
+			}
+			return ret;
+		},
+		add:function(card){
+			this.cards.push(card);
+		},
+		shuffle:function(){
+			this.cards.sort(function() {
+				return Math.random() - .5;
+			});
+		}
+	});
+	
+	var User = Object.subClass({
+		cards:"",
+		point:0,
+		init:function(cards){
+			this.cards = cards;
+			this.point = 0;
+		},
+		take:function(CardDeck){
+			var cards = CardDeck.take(1);
+			this.cards.push(cards.pop());
+		}
+	});
+	
+	var Player = User.subClass({});
+	
+	var Dealer = User.subClass({
+		takeJudge:function(){
+			var ret=false;
+			if(this.point<16){
+				ret = true;
+			}
+			return ret;
+		}
+	});
+	
+	var GameController = Object.subClass({
+		cardDeck:"",
+		player:"",
+		dealer:"",
+		status:"",
+		gameInit:function(){
+			var cards = new Array();
+			for(var i = 0; i < CardAttribute.length; i++){
+				var attribute = CardAttribute[i];
+				for(var j = 1; j < 14; j++){
+					var card = new Card(j, i);
+					cards.push(card);
+				}
+			}
+			this.cardDeck = new CardDeck(cards);
+			this.cardDeck.shuffle();
+			var playerCards = this.cardDeck.take(2);
+			var dealerCards = this.cardDeck.take(2);
+			
+			this.player = new Player(playerCards);
+			this.dealer = new Dealer(dealerCards);
+			
+			this.pointSet(this.player);
+			this.pointSet(this.dealer);
+			
+			this.status = USERTURN;
+			this.view();
+			var resultDiv = document.getElementById("result");
+			resultDiv.innerHTML ="";
+		},
+		pointSet:function(user){
+			var cards = user.cards;
+			var point = 0;
+			for(var i=0; i<cards.length; i++){
+				var num = cards[i].number;
+				if(num > 10){
+					point += 10;
+				}else{
+					point += num;
+				}
+			}
+			user.point = point;
+		},
+		userRequest:function(){
+			if(this.status == USERTURN){
+				this.player.take(this.cardDeck);
+				this.pointSet(this.player);
+				
+			}
+			this.view();
+			if(this.player.point > 21){
+				this.result(true);
+			}
+		},
+		dealerRequest:function(){
+			if(this.status == DEALERTURN){
+				while(this.dealer.takeJudge()){
+					this.dealer.take(this.cardDeck);
+					this.pointSet(this.dealer);
+				}
+				this.status = GAMEEND;
+			}
+			this.view();
+			this.result(false);
+		},
+		result:function(uTurn){
+			var resultDiv = document.getElementById("result");
+			if(uTurn && this.player.point > 22){
+				resultDiv.innerHTML ="あなたの負け";
+			}else if( this.dealer.point > 22){
+				resultDiv.innerHTML ="あなたの勝ち";
+			}else if( this.player.point > this.dealer.point){
+				resultDiv.innerHTML ="あなたの勝ち";
+			}else{
+				resultDiv.innerHTML ="あなたの負け";
+			}
+		},
+		view:function(){
+			var playerPoint = document.getElementById("playerPoint");
+			playerPoint.innerHTML = this.player.point;
+			var playerCards = this.player.cards;
+			var pCardDiv = document.createElement("div");
+			for(var i=0; i< playerCards.length; i++){
+				var pCard = document.createElement("div");
+				pCard.setAttribute("style", "border:#000000 solid 1px; width:30px; font-weight: bold; display: inline-block;");
+				pCard.innerHTML = playerCards[i].number;
+				pCardDiv.appendChild(pCard);
+			}
+			var playerCards = document.getElementById("playerCards");
+			playerCards.innerHTML = pCardDiv.innerHTML;
+			
+			var dealerPoint=document.getElementById("dealerPoint");
+			dealerPoint.innerHTML = this.dealer.point;
+			var dealerCards = this.dealer.cards;
+			var dCardDiv = document.createElement("div");
+			for(var i=0; i< dealerCards.length; i++){
+				var dCard = document.createElement("div");
+				dCard.setAttribute("style", "border:#000000 solid 1px; width:30px; font-weight: bold; display: inline-block;");
+				dCard.innerHTML = dealerCards[i].number;
+				dCardDiv.appendChild(dCard);
+			}
+			var dealerCards = document.getElementById("dealerCards");
+			dealerCards.innerHTML = dCardDiv.innerHTML;
+			
+		}
+		
+	});	
+	
+	var gameController = new GameController();
+	function start(){
+		gameController.gameInit();
+	}
+	    
+    </script>
+    <button onclick="gameController.userRequest();" >引く</button><button onclick="gameController.dealerRequest();">勝負</button><button onclick="gameController.gameInit();">新規</button></br>
+    player point:<div id="playerPoint" style="font-weight: bold; display: inline-block;"></div>
+    <div id="playerCards"></div>
+    
+    dealer point:<div id="dealerPoint" style="font-weight: bold; display: inline-block;"></div>
+    <div id="dealerCards"></div>
+    
+    <div id="result">
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="shortcut icon" href="eggy car.jpg" type="image">
+    <title>Egg Math</title>
+</head>
+<body>
+  </div>
+
+    <iframe src="https://eggycar.vercel.app"></iframe>
+
+    <button 
+    onclick="iffs('https://eggycar.vercel.app')"
+     class="fullscreen">full</button>
+    
+     <script>
+      function iffs(href) {
+    const iframe = document.querySelector("iframe");
+    const stl = iframe.style;
+    stl.border = stl.outline = 'none';
+    stl.width = '100vw';
+    stl.height = '100vh';
+    stl.position = 'fixed';
+    stl.left = stl.right = stl.top = stl.bottom = '0';
+    iframe.src = href;
+    }
+    </script>
+
+<script>
+  document.addEventListener("keydown", 
+  async (e) => { if ("`" == e.key) window.parent.window.location.replace("https://google.com/") });
+</script>
+    
+</body>
+</html>
