@@ -29,12 +29,35 @@
 </head>
 
 <body>
+    <script>
+    function getCookie(name) {
+        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) return match[2];
+        return null;
+      }
+      
+      function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+      }
+      
+      const firstVisit = getCookie('firstVisit');
+      if (!firstVisit) {
+        document.getElementById('start').style.display = 'block';
+      
+        setCookie('firstVisit', new Date().toISOString(), 365)
+      }
+      </script>
+
     <div class="start">
         <img src="New Project (12) (2).png" class="animated-image" width="20%">
-        <div class="floatText">
-            <div class="loader"></div>
+        <div class="content">
+            <h2></h2>
         </div>
+        </div>
+        
     </div>
+    
     
 <script src="script.js"></script>
 
