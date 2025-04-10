@@ -27,38 +27,42 @@
 <meta name="theme-color" content="#131212">
 
 <script>
-    function getCookie(name) {
-        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-        if (match) return match[2];
-        return null;
-      }
-      
-      function setCookie(name, value, days) {
-        const expires = new Date(Date.now() + days * 864e5).toUTCString();
-        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-      }
-      
-      const firstVisit = getCookie('firstVisit');
-      if (!firstVisit) {
-        document.getElementById('start').style.display = 'block';
-      
-        setCookie('firstVisit', new Date().toISOString(), 365)
-      }
-      </script>
+  function getCookie(name) {
+    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+    if (match) return match[2];
+    return null;
+  }
+
+  function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+  }
+
+  window.onload = function() {
+    const firstVisit = getCookie('firstVisit');
+    const startDiv = document.querySelector('.start');
+    
+    if (!firstVisit) {
+      if (startDiv) startDiv.style.display = 'block';
+      setCookie('firstVisit', new Date().toISOString(), 365);
+    } else {
+      if (startDiv) startDiv.style.display = 'none';
+    }
+  }
+</script>
 
 </head>
 
 <body>
   
 
-    <div class="start">
-        <img src="New Project (12) (2).png" class="animated-image" width="20%">
-        <div class="content">
-            <h2></h2>
-        </div>
-        </div>
-        
+
+    <div class="start" style="display: none;">
+      <img src="New Project (12) (2).png" class="animated-image" width="20%">
+  
     </div>
+ 
+  
     
     
 <script src="script.js"></script>
