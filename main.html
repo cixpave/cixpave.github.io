@@ -1,0 +1,74 @@
+
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CW1 Assets</title>
+        
+    
+    
+        <meta property="og:image" content="New Project (12) (1).png" />
+        <meta property="og:site_name" content="CW1 Assets" />
+        <meta property="og:locale" content="en_US" />
+        
+    <link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta name="mobile-web-app-capable" content="yes"> 
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="CW1 Assets">
+    <style>
+        
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#131212">
+</head>
+<body>
+  
+  <div class="navigation"></div>
+  <div class="gs1">
+    <h3>All</h3>
+    <p id="lastPressGame">All Games</p>
+  </div>
+  <div class="gtable">
+    <button class="game-button">Game A</button>
+    <button class="game-button">Game B</button>
+    <button class="game-button">Game C</button>
+  </div>
+
+  <script>
+    function getCookie(name) {
+      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+      if (match) return decodeURIComponent(match[2]);
+      return null;
+    }
+
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days * 864e5).toUTCString();
+      document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
+
+    window.onload = function() {
+      const lastGame = getCookie('lastGame');
+      const display = document.getElementById('lastPressGame');
+      const buttons = document.querySelectorAll('.game-button');
+
+      // If cookie exists, update display
+      if (lastGame) {
+        display.textContent = 'Last Played: ' + lastGame;
+      } 
+
+      // Add event listeners to buttons
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          const game = this.textContent;
+          setCookie('lastGame', game, 30); // 30 days
+          display.textContent = 'Last Played: ' + game;
+        });
+      });
+    }
+  </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CW1 Courses</title>
+<title>CW1</title>
     
 
 
@@ -40,7 +40,7 @@
 
   window.onload = function() {
     const firstVisit = getCookie('firstVisit');
-    const startDiv = document.querySelector('.start');
+    const startDiv = document.querySelector('.onboarding');
     
     if (!firstVisit) {
       if (startDiv) startDiv.style.display = 'block';
@@ -56,11 +56,19 @@
 <body>
   
 
-
+  <div class="onboarding">
     <div class="start" style="display: none;">
       <img src="New Project (12) (2).png" class="animated-image" width="20%">
-  
+
     </div>
+  </div>
+ <div class="content"><div class="site">
+  <div class="navigation"></div>
+    <div class="head">
+      <h3>Under Development</h3>
+    </div>
+</div></div>
+  
  
   
     

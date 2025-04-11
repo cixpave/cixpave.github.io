@@ -1,4 +1,51 @@
 
 <html><head>
-    <meta http-equiv='refresh' content='0; URL=http://xvideos.com/'>
-  </head></html>
+  
+  </head>
+  <body>
+    
+    <div class="navigation"></div>
+    <div class="gs1">
+      <h3>All</h3>
+      <p id="lastPressGame">All Games</p>
+    </div>
+    <div class="gtable">
+      <button class="game-button">Game A</button>
+      <button class="game-button">Game B</button>
+      <button class="game-button">Game C</button>
+    </div>
+
+    <script>
+      function getCookie(name) {
+        let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+        if (match) return decodeURIComponent(match[2]);
+        return null;
+      }
+  
+      function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+      }
+  
+      window.onload = function() {
+        const lastGame = getCookie('lastGame');
+        const display = document.getElementById('lastPressGame');
+        const buttons = document.querySelectorAll('.game-button');
+  
+        // If cookie exists, update display
+        if (lastGame) {
+          display.textContent = 'Last Played: ' + lastGame;
+        } 
+  
+        // Add event listeners to buttons
+        buttons.forEach(button => {
+          button.addEventListener('click', function() {
+            const game = this.textContent;
+            setCookie('lastGame', game, 30); // 30 days
+            display.textContent = 'Last Played: ' + game;
+          });
+        });
+      }
+    </script>
+  </body>
+  </html>
