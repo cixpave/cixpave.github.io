@@ -25,32 +25,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#131212">
 </head>
+<canvas id="dotCanvas"></canvas>
+
 <body>
   
-  <div class="navigation"></div>
-  <div class="gs1">
-    <h3>All</h3>
-    <p id="lastPressGame">All Games</p>
-  </div>
-  <div class="game-grid">
-    <div class="game-card">
-      <button class="game-button" data-game="Game A">
-        <img src="game-a.jpg" alt="Game A">
-      </button>
-      <p class="game-name">Game A</p>
-    </div>
-    <div class="game-card">
-      <button class="game-button" data-game="Game B">
-        <img src="game-b.jpg" alt="Game B">
-      </button>
-      <p class="game-name">Game B</p>
-    </div>
-    <div class="game-card">
-      <button class="game-button" data-game="Game C">
-        <img src="game-c.jpg" alt="Game C">
-      </button>
-      <p class="game-name">Game C</p>
-    </div>
+    <nav class="navbar">
+        <a href="/" class="home-button">
+          <img src="New Project (12) (2).png" alt="Home">
+        </a>
+        </nav>
+        <div class="content"><div class="gs1">
+            <h3>All</h3>
+            <p id="lastPressGame">All Games</p>
+          </div>
+          <div class="game-grid">
+            <div class="game-card">
+                <a href="/assets/mathtools.html"> <button class="game-button" data-game="Game A" >
+                    <img src="game-a.jpg" alt="Game A">
+                    <p class="game-name">Eaglercraft</p>
+                  </button></a>
+             
+              
+            </div>
+            <div class="game-card">
+              <button class="game-button" data-game="Game B">
+                <img src="game-b.jpg" alt="Game B">
+              </button>
+              <p class="game-name">Game B</p>
+            </div>
+            <div class="game-card">
+              <button class="game-button" data-game="Game C">
+                <img src="game-c.jpg" alt="Game C">
+              </button>
+              <p class="game-name">Game C</p>
+            </div></div>
+  
 
   <script>
     function getCookie(name) {
@@ -84,5 +93,64 @@
       });
     }
   </script>
+<script>
+    const canvas = document.getElementById('dotCanvas');
+    const ctx = canvas.getContext('2d');
+  
+    let width, height;
+    const spacing = 40;
+    let dots = [];
+    let mouse = { x: -1000, y: -1000 }; // off-screen initially
+  
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      createDots();
+    }
+  
+    function createDots() {
+      dots = [];
+      for (let x = 0; x < width; x += spacing) {
+        for (let y = 0; y < height; y += spacing) {
+          dots.push({ x, y, alpha: 0 });
+        }
+      }
+    }
+  
+    function drawDots() {
+      ctx.clearRect(0, 0, width, height);
+      dots.forEach(dot => {
+        const dx = mouse.x - dot.x;
+        const dy = mouse.y - dot.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 100;
+  
+        // Fade logic
+        let targetAlpha = dist < maxDist ? 1 - dist / maxDist : 0;
+        dot.alpha += (targetAlpha - dot.alpha) * 0.1; // Smooth transition
+  
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha})`;
+        ctx.fill();
+      });
+    }
+  
+    function animate() {
+      drawDots();
+      requestAnimationFrame(animate);
+    }
+  
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+  
+    window.addEventListener('resize', resizeCanvas);
+  
+    resizeCanvas();
+    animate();
+  </script>
+  
 </body>
 </html>
