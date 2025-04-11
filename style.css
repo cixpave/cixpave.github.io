@@ -167,3 +167,42 @@ position: absolute;  }
   left: 20%;
   position: absolute;
 }
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 20px;
+  max-width: 800px;
+  margin: auto;
+}
+
+.game-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.game-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.game-button img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 20px;
+  transition: transform 0.2s;
+}
+
+.game-button img:hover {
+  transform: scale(1.05);
+}
+
+.game-name {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
