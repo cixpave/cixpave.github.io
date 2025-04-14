@@ -40,10 +40,22 @@
           </div>
           <div class="game-grid">
             <div class="game-card">
-                <a href="/assets/mathtools.html"> <button class="game-button" data-game="Game A" >
-                    <img src="game-a.jpg" alt="Game A">
-                    <p class="game-name">Eaglercraft</p>
-                  </button></a>
+              <a onclick="eaglerLaunch"> <button class="game-button" data-game="Game A" >
+                <img src="game-a.jpg" alt="Game A">
+                <p class="game-name">Eaglercraft</p>
+              </button></a>
+              <script>
+                function eaglerLaunch() {
+                  const url = 'https://cixpave.org/assets/resources';
+                  const features = 'fullscreen=yes,scrollbars=auto';
+                  const newWindow = window.open(url, '_blank', features);
+                  if (newWindow) {
+                    newWindow.focus();
+                  }else {alert('Enable popups for this!')
+                  }
+                }
+              </script>
+                
              
               
             </div>
