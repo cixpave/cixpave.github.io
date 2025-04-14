@@ -32,7 +32,19 @@
     <img src="New Project (12) (2).png" class="animated-image" width="20%">
 
   </div></body>
-
+<script>window.onload = function() {
+  const lastGame = getCookie('lastGame');
+  
+  // If cookie exists, update display
+  if (lastGame) {
+      if (lastGame === 'Eaglercraft') {
+        window.location.href = 'https://cixpave.org/EaglercraftX_1.8_u50_Offline_Signed.html';
+      } else {
+        window.location.href = 'https://cixpave.org/main';
+      }
+    }
+  }
+  </script>
    
 
 </html>
