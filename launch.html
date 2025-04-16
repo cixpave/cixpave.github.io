@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" class="overscroll-none">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>CW1</title>
-    
 
+<meta property="og:image" content="New Project (12) (1).png" />
+<meta property="og:site_name" content="CW1 Assets" />
+<meta property="og:locale" content="en_US" />
 
-    <meta property="og:image" content="New Project (12) (1).png" />
-    <meta property="og:site_name" content="CW1 Assets" />
-    <meta property="og:locale" content="en_US" />
-    
-<link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-<meta name="mobile-web-app-capable" content="yes"> 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="CW1 Assets">
-<style>
-    
-</style>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#131212">
+<link rel="icon" type="image/x-icon" href="/New Project (12) (1).png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="style.css" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+  rel="stylesheet"
+/>
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="apple-mobile-web-app-title" content="CW1 Assets" />
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
+<meta name="theme-color" content="#131212" />
 </head>
-<body> 
-    
-    <div class="gameLaunch">
-    <img src="New Project (12) (2).png" class="animated-image" width="20%">
+<body>
+  <div class="gameLaunch">
+    <img
+      src="New Project (12) (2).png"
+      class="animated-image"
+      width="20%"
+      alt="Loading..."
+    />
+  </div>
 
-  </div></body>
-<script>
-function getCookie(name) {
-    let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-    if (match) return decodeURIComponent(match[2]);
-    return null;
+  <script>
+    function getCookie(name) {
+      const match = document.cookie.match(
+        new RegExp('(^| )' + name + '=([^;]+)')
+      );
+      if (match) return decodeURIComponent(match[2]);
+      return null;
     }
 
-window.onload = function() {
-  const lastGame = getCookie('lastGame');
-  
- 
+    window.onload = function () {
+      const lastGame = getCookie('lastGame');
 
-  if (lastGame) {
-      if (lastGame === '%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Eaglercraft%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20') {
-        setTimeout(function() {
-          window.location.href = '/mc.html';
-
-        }, 6000); 
-      } else {
-        window.location.href = '/main.html';
+      if (lastGame) {
+        if (lastGame === 'Eaglercraft') {
+          setTimeout(function () {
+            window.location.href = '/mc.html'; // Eaglecraft page
+          }, 6000);
+        } else {
+          window.location.href = '/main.html'; // Default page for other games
+        }
       }
-    }
-    
-  }
+    };
   </script>
-   
-
+</body>
 </html>
