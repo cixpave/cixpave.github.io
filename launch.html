@@ -50,18 +50,31 @@
       const lastGame = getCookie('lastGame');
 
       if (lastGame) {
-        if (lastGame === 'Eaglercraft') {
-          setTimeout(function () {
-            window.location.href = '/mc.html'; // Eaglecraft page
-          }, 3000);
-        } else {
-          setTimeout(function () {
-            window.location.href = '/main.html'; // Eaglecraft page
-          }, 3000);
-
-        }
-      }
+  setTimeout(function () {
+    switch (lastGame) {
+      case 'Eaglercraft':
+        window.location.href = '/mc';
+        break;
+      case 'cattle':
+        window.location.href = '/sheep';
+        break;
+      case 'placeholder':
+        window.location.href = '/';
+        break;
+      default:
+        window.location.href = '/main';
+        break;
+    }
+  }, 3000);
+}
     };
+    document.addEventListener('keydown', function (event) {
+
+  if (event.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
+    event.preventDefault(); // Prevent default back navigation
+    window.location.href = '/main';
+  }
+});
   </script>
 </body>
 </html>
