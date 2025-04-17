@@ -1,0 +1,116 @@
+
+
+<html><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CW1</title>
+        
+    
+    
+        <meta property="og:image" content="New Project (12) (1).png" />
+        <meta property="og:site_name" content="CW1 Assets" />
+        <meta property="og:locale" content="en_US" />
+        
+    <link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta name="mobile-web-app-capable" content="yes"> 
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="CW1 Assets">
+    <style>
+        
+    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#131212">
+  </head>
+  <canvas id="dotCanvas"></canvas>
+  
+  <body>
+  
+    <nav class="xbox-navbar">
+        <div class="navbar-left">
+          <a href="/" class="home-but">
+            <img src="New Project (12) (2).png" alt="Home" class="home-icon">
+          </a>
+          <img src="New Project (12) (1).png" alt="Profile Info" class="profile-info-img">
+        </div>
+        <div class="navbar-center">
+          <span class="nav-icon">&#9776;</span>
+          <span class="nav-icon">&#128451;</span>
+          <span class="nav-icon">&#128247;</span>
+          <span class="nav-icon">&#128269;</span>
+          <span class="nav-icon">&#9881;</span>
+        </div>
+        <div class="navbar-right">
+          <span class="battery">&#128267;</span>
+          <span class="clock">04:55 pm</span>
+        </div>
+      </nav>
+      
+        
+  
+        
+  <script>
+    const canvas = document.getElementById('dotCanvas');
+    const ctx = canvas.getContext('2d');
+  
+    let width, height;
+    const spacing = 40;
+    let dots = [];
+    let mouse = { x: -1000, y: -1000 }; // off-screen initially
+  
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      createDots();
+    }
+  
+    function createDots() {
+      dots = [];
+      for (let x = 0; x < width; x += spacing) {
+        for (let y = 0; y < height; y += spacing) {
+          dots.push({ x, y, alpha: 0 });
+        }
+      }
+    }
+  
+    function drawDots() {
+      ctx.clearRect(0, 0, width, height);
+      dots.forEach(dot => {
+        const dx = mouse.x - dot.x;
+        const dy = mouse.y - dot.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 100;
+  
+        // Fade logic
+        let targetAlpha = dist < maxDist ? 1 - dist / maxDist : 0;
+        dot.alpha += (targetAlpha - dot.alpha) * 0.1; // Smooth transition
+  
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha})`;
+        ctx.fill();
+      });
+    }
+  
+    function animate() {
+      drawDots();
+      requestAnimationFrame(animate);
+    }
+  
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+  
+    window.addEventListener('resize', resizeCanvas);
+  
+    resizeCanvas();
+    animate();
+  </script>
+  
+  </body>
+  </html>
