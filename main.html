@@ -37,70 +37,48 @@
         <div class="content"><div class="gs1">
             <h3>All Games</h3>
             <p id="lastPressGame">Last Played:</p>
-          </div>
-          <div class="game-grid">
-            <div class="game-card">
-              <a href="/launch.html"> <button class="game-button" data-game="Game A" >
-                <img src="game-a.jpg" alt="Game A">
-                <p class="game-name">Eaglercraft</p>
-              </button></a>
-              <script>
-                function eaglerLaunch() {
-                  alert('Fixing!')
-                }
-              </script>
-                
-             
-              
-            </div>
-            <div class="game-card">
-              <button class="game-button" data-game="Game B">
-                <img src="game-b.jpg" alt="Game B">
-              </button>
-              <p class="game-name">Game B</p>
-            </div>
-            <div class="game-card">
-              <button class="game-button" data-game="Game C">
-                <img src="game-c.jpg" alt="Game C">
-              </button>
-              <p class="game-name">Game C</p>
-            </div></div>
-  
+        <div class="game-grid">
+    <div class="game-card">
+      <button id="eaglercraft-btn" class="game-button">
+        <img src="game-a.jpg" alt="Eaglercraft" />
+        <p>Eaglercraft</p>
+      </button>
+    </div>
+    <div class="game-card">
+      <button id="cattle-btn" class="game-button">
+        <img src="game-b.jpg" alt="cattle" />
+        <p>Crazy Cattle 3D</p>
+      </button>
+    </div>
+    <div class="game-card">
+      <button id="gamec-btn" class="game-button">
+        <img src="game-c.jpg" alt="Game C" />
+        <p>Game C</p>
+      </button>
+    </div>
+  </div>
 
   <script>
-    function getCookie(name) {
-      let match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-      if (match) return decodeURIComponent(match[2]);
-      return null;
-    }
-
-
     function setCookie(name, value, days) {
       const expires = new Date(Date.now() + days * 864e5).toUTCString();
       document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
     }
 
-    
+    // When user clicks a game button, set the cookie and redirect to launch page
+    document.getElementById('eaglercraft-btn').addEventListener('click', function () {
+      setCookie('lastGame', 'Eaglercraft', 30);
+      window.location.href = '/launch.html';
+    });
 
-    window.onload = function() {
-      const lastGame = getCookie('lastGame');
-      const display = document.getElementById('lastPressGame');
-      const buttons = document.querySelectorAll('.game-button');
+    document.getElementById('cattle-btn').addEventListener('click', function () {
+      setCookie('lastGame', 'cattle', 30);
+      window.location.href = '/launch.html';
+    });
 
-      // If cookie exists, update display
-      if (lastGame) {
-        display.textContent = 'Last Played: ' + lastGame;
-      } 
-
-      // Add event listeners to buttons
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          const game = this.textContent;
-          setCookie('lastGame', game, 30); // 30 days
-          display.textContent = 'Last Played: ' + game;
-        });
-      });
-    }
+    document.getElementById('gamec-btn').addEventListener('click', function () {
+      setCookie('lastGame', 'Game C', 30);
+      window.location.href = '/launch.html';
+    });
   </script>
 <script>
     const canvas = document.getElementById('dotCanvas');
