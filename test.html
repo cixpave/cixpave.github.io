@@ -35,7 +35,6 @@
           <a href="/" class="home-but">
             <img src="New Project (12) (2).png" alt="Home" class="home-icon">
           </a>
-          <img src="New Project (12) (1).png" alt="Profile Info" class="profile-info-img">
         </div>
         <div class="navbar-center">
           <span class="nav-icon">&#9776;</span>
@@ -45,13 +44,23 @@
           <span class="nav-icon">&#9881;</span>
         </div>
         <div class="navbar-right">
-          <span class="battery">&#128267;</span>
-          <span class="clock">04:55 pm</span>
+          <span class="clock" id="clock">04:55 pm</span>
         </div>
       </nav>
       
         
-  
+      <script>
+        function updateTime() {
+          const now = new Date();
+          const hours = now.getHours().toString().padStart(2, '0');
+          const minutes = now.getMinutes().toString().padStart(2, '0');
+          const timeString = `${hours}:${minutes}`;
+          document.getElementById("clock").textContent = timeString;
+        }
+    
+        updateTime();
+        setInterval(updateTime, 1000);
+      </script>
         
   <script>
     const canvas = document.getElementById('dotCanvas');

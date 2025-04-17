@@ -397,3 +397,56 @@ position: absolute;  }
   cursor: pointer;
   transition: transform 0.2s;
 }
+
+.xbox-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(25, 33, 43, 0.95);
+  padding: 12px 32px;
+  color: #fff;
+  font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  position: relative;
+  z-index: 10;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.home-icon {
+  width: 36px;
+  height: 36px;
+}
+
+
+.navbar-center {
+  display: flex;
+  gap: 32px;
+}
+
+.nav-icon {
+  font-size: 1.3em;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.nav-icon:hover {
+  opacity: 1;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+
+
+.clock {
+  font-size: 1.1em;
+  letter-spacing: 1px;
+}
