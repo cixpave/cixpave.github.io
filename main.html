@@ -36,7 +36,8 @@
         </nav>
         <div class="content"><div class="gs1">
             <h3>All Games</h3>
-            <p id="lastPressGame">Last Played:</p>
+            <p id="lastPressGame">All  <button class="rejoin" id="play">Play</button>
+            </p>
         <div class="game-grid">
     <div class="game-card">
       <button id="eaglercraft-btn" class="game-button">
@@ -53,12 +54,20 @@
     <div class="game-card">
       <button id="gamec-btn" class="game-button">
         <img src="game-c.jpg" alt="Game C" />
-        <p>Game C</p>
+        <p>Placeholder</p>
       </button>
     </div>
+</div>
+    <p style="font-size: 10px;">dm @cixpave for any games</p>
+
   </div>
 
   <script>
+
+    const display = document.getElementById('lastPressGame');
+    const play = document.getElementById('play');
+
+
     function setCookie(name, value, days) {
       const expires = new Date(Date.now() + days * 864e5).toUTCString();
       document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
@@ -79,6 +88,25 @@
       setCookie('lastGame', 'Game C', 30);
       window.location.href = '/launch.html';
     });
+
+    if (lastGame) {
+        display.textContent = 'Last Played: ' + lastGame;
+    } else {
+      play.style.display = 'none';
+    }
+
+    play.addEventListener('click', function () {
+      window.location.href = '/launch.html';
+    });
+
+      buttons.forEach(button => {
+        button.addEventListener('click', function() {
+          const game = this.textContent;
+          setCookie('lastGame', game, 30); // 30 days
+          display.textContent = 'Last Played: ' + game;
+        });
+      });
+    
   </script>
 <script>
     const canvas = document.getElementById('dotCanvas');
