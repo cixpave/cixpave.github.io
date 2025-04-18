@@ -1,29 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CXUI</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div class="top-bar">
-<a href="/" class="home-but">
-            <img src="New Project (12) (2).png" alt="Home" class="home-icon">
-          </a>
-    <div class="time" id="clock">--:--</div>
+  <!-- Xbox Style Navbar -->
+  <div class="xbox-navbar">
+    <div class="navbar-left">
+      <a href="/" class="home-but">
+        <img src="New Project (12) (2).png" alt="Home" class="home-icon"/>
+      </a>
+    </div>
+    <div class="navbar-right">
+      <div class="clock" id="clock">--:--</div>
+    </div>
   </div>
 
-  <div class="game-menu" id="gameMenu">
-    <div class="game-tile selected" tabindex="0">Starfield</div>
-    <div class="game-tile">Forza</div>
-    <div class="game-tile">Minecraft</div>
-    <div class="game-tile">Disney+</div>
-    <div class="game-tile">Party Animals</div>
-    <div class="game-tile">Fortnite</div>
-    <div class="game-tile">Diablo</div>
-    <div class="game-tile">Assassin's Creed</div>
-    <div class="game-tile">Ghostwire</div>
+  <!-- Game Grid Section -->
+  <div class="game-grid" id="gameMenu">
+    <div class="game-card">
+      <button class="game-button"><img src="starfield.jpg" alt="Starfield"/></button>
+      <p class="game-name">Starfield</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="forza.jpg" alt="Forza"/></button>
+      <p class="game-name">Forza</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="minecraft.jpg" alt="Minecraft"/></button>
+      <p class="game-name">Minecraft</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="disney.jpg" alt="Disney+"/></button>
+      <p class="game-name">Disney+</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="party_animals.jpg" alt="Party Animals"/></button>
+      <p class="game-name">Party Animals</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="fortnite.jpg" alt="Fortnite"/></button>
+      <p class="game-name">Fortnite</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="diablo.jpg" alt="Diablo"/></button>
+      <p class="game-name">Diablo</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="assassins_creed.jpg" alt="Assassin's Creed"/></button>
+      <p class="game-name">Assassin's Creed</p>
+    </div>
+    <div class="game-card">
+      <button class="game-button"><img src="ghostwire.jpg" alt="Ghostwire"/></button>
+      <p class="game-name">Ghostwire</p>
+    </div>
   </div>
 
   <script src="script.js"></script>
