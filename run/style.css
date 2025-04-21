@@ -402,7 +402,6 @@ position: absolute;  }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(25, 33, 43, 0.95);
   padding: 12px 32px;
   color: #fff;
   font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;

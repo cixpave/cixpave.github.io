@@ -250,12 +250,13 @@ position: absolute;  }
   gap: 15px;
   max-width: 800px;
   margin: auto;
+  position: relative; /* Make it a stacking context */
 }
 
 .game-card {
   background: linear-gradient(145deg, #1a1a1a, #292929);
   border-radius: 16px;
-  padding: 1rem;
+  padding: 5px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s, box-shadow 0.3s;
   display: flex;
@@ -263,16 +264,43 @@ position: absolute;  }
   align-items: center;
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  transform: scale(1);
+  transition: transform 0.3s ease; /* Smooth scale transition */
 }
 
 .game-card:hover {
-  transform: translateY(-5px) scale(1.02);
+  transform: translateY(-5px) scale(1.05);
   box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1);
+  filter: brightness(1.1);
 }
 
-.game-card p {
+.game-title {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #fff;
+  padding: 10px 15px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  display: none;
+  opacity: 0;
+}
+
+.game-card:hover .game-title {
+  display: block;
+  opacity: 1;
+  transition: opacity 1s ease; 
+}
+
+
+
+
+.game-title p {
   color:white;
-  font-family: 'Montserrat', sans-serif;
+  opacity: 1;
+ 
 }
 
 .game-button {
@@ -283,18 +311,14 @@ position: absolute;  }
 }
 
 .game-button img {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: 12px;
   transition: transform 0.3s ease, filter 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
-.game-button img:hover {
-  transform: scale(1.08);
-  filter: brightness(1.1);
-}
 
 
 .game-name {
@@ -402,7 +426,6 @@ position: absolute;  }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(25, 33, 43, 0.95);
   padding: 12px 32px;
   color: #fff;
   font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
@@ -432,10 +455,29 @@ position: absolute;  }
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.2s;
+  border-radius: 50%;
+  border-color: white;
+  transition: all 0.3s ease;
+  display: inline-flex; /* Use inline-flex for centering inside the circle */
+  align-items: center;
+  justify-content: center;
+  
 }
 
+.nav-icon {
+  
+  transition: all 0.3s ease; /* Smooth transition for hover effect */
+}
+
+
 .nav-icon:hover {
-  opacity: 1;
+  opacity: 1;      /* Make the icon visible when hovered */
+  background-color: rgba(0, 0, 0, 0.1); /* Light background circle */
+}
+
+/* Make icons fade in when hovered */
+.nav-icon:hover {
+  transform: scale(1.1); /* Slightly increase size on hover */
 }
 
 .navbar-right {
@@ -450,3 +492,14 @@ position: absolute;  }
   font-size: 1.1em;
   letter-spacing: 1px;
 }
+
+.tiles {
+  display: flex;
+  gap: 1vw;
+  margin-bottom: 2vw;
+  flex-wrap: wrap;
+  margin-top: 10%;
+  margin-left: 5%;
+
+}
+
