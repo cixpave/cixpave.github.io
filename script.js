@@ -1,111 +1,98 @@
-particlesJS("particles-js", {
-    "particles": {
-      "number": {
-        "value": 80,
-        "density": {
-          "enable": true,
-          "value_area": 800
-        }
-      },
-      "color": {
-        "value": "#ffffff"
-      },
-      "shape": {
-        "type": "edge",
-        "stroke": {
-          "width": 0,
-          "color": "#000000"
-        },
-        "polygon": {
-          "nb_sides": 5
-        },
-        "image": {
-          "src": "img/github.svg",
-          "width": 100,
-          "height": 100
-        }
-      },
-      "opacity": {
-        "value": 0.40246529723245905,
-        "random": false,
-        "anim": {
-          "enable": false,
-          "speed": 1,
-          "opacity_min": 0.1,
-          "sync": false
-        }
-      },
-      "size": {
-        "value": 2,
-        "random": true,
-        "anim": {
-          "enable": false,
-          "speed": 0,
-          "size_min": 0,
-          "sync": false
-        }
-      },
-      "line_linked": {
-        "enable": true,
-        "distance": 224.4776885211732,
-        "color": "#ffffff",
-        "opacity": 0.49705773886831206,
-        "width": 1.2827296486924182
-      },
-      "move": {
-        "enable": true,
-        "speed": 5,
-        "direction": "none",
-        "random": false,
-        "straight": false,
-        "out_mode": "out",
-        "bounce": false,
-        "attract": {
-          "enable": false,
-          "rotateX": 1122.388442605866,
-          "rotateY": 1200
-        }
-      }
-    },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": {
-          "enable": true,
-          "mode": "repulse"
-        },
-        "onclick": {
-          "enable": true,
-          "mode": "push"
-        },
-        "resize": true
-      },
-      "modes": {
-        "grab": {
-          "distance": 400,
-          "line_linked": {
-            "opacity": 1
-          }
-        },
-        "bubble": {
-          "distance": 400,
-          "size": 40,
-          "duration": 2,
-          "opacity": 8,
-          "speed": 3
-        },
-        "repulse": {
-          "distance": 100,
-          "duration": 0.4
-        },
-        "push": {
-          "particles_nb": 4
-        },
-        "remove": {
-          "particles_nb": 2
-        }
-      }
-    },
-    "retina_detect": true
-  })
+  const canvas = document.getElementById('dotCanvas');
+  const ctx = canvas.getContext('2d');
 
+  let width, height;
+  const spacing = 40;
+  let dots = [];
+  let mouse = { x: -1000, y: -1000 };
+
+  function resizeCanvas() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    createDots();
+  }
+
+  function createDots() {
+    dots = [];
+    for (let x = 0; x < width; x += spacing) {
+      for (let y = 0; y < height; y += spacing) {
+        dots.push({ x, y, alpha: 0 });
+      }
+    }
+  }
+
+  function drawDots() {
+    ctx.clearRect(0, 0, width, height);
+    dots.forEach(dot => {
+      const dx = mouse.x - dot.x;
+      const dy = mouse.y - dot.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      const maxDist = 100;
+
+      let targetAlpha = dist < maxDist ? 1 - dist / maxDist : 0;
+      dot.alpha += (targetAlpha - dot.alpha) * 0.1;
+
+      ctx.beginPath();
+      ctx.arc(dot.x, dot.y, 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha})`;
+      ctx.fill();
+    });
+  }
+
+  function animate() {
+    drawDots();
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('resize', resizeCanvas);
+
+  resizeCanvas();
+  animate();
+
+  // Game launching logic
+  const play = document.getElementById('play');
+  const display = document.getElementById('gamePlayed');
+
+  function setCookie(name, value, days) {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+  }
+
+  function getCookie(name) {
+    return document.cookie.split('; ').reduce((acc, cookie) => {
+      const [k, v] = cookie.split('=');
+      return k === name ? decodeURIComponent(v) : acc;
+    }, null);
+  }
+
+  const lastGame = getCookie('lastGame');
+  if (lastGame) {
+    display.textContent = 'Last Played: ' + lastGame;
+  } else {
+    play.style.display = 'block';
+  }
+
+  play.addEventListener('click', function () {
+    window.location.href = '/launch.html';
+  });
+
+  const buttons = document.querySelectorAll('.game-button');
+  buttons.forEach(button => {
+    button.addEventListener('click', function () {
+      const game = this.getAttribute('data-game');
+      setCookie('lastGame', game, 30);
+      display.textContent = 'Last Played: ' + game;
+      window.location.href = '/launch.html';
+    });
+  });
+
+  // Search feature
+  
+  
+
+  

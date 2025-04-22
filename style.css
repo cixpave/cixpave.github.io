@@ -1,18 +1,19 @@
-
 :root {
-    --speed: 1;
+  --speed: 1;
 }
+
 body {
-background-color: black;
-    font-family: 'Montserrat', sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    overflow: hidden;
-    color: white;
-    background-size: 88px 88px;
-    background-image: radial-gradient(circle, #ffffff2a 1px, rgba(255, 255, 255, 0.035) 1px);
-    background-attachment: fixed;}
+  background-color: black;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: white;
+  background-size: 88px 88px;
+  background-image: radial-gradient(circle, #ffffff2a 1px, rgba(255, 255, 255, 0.035) 1px);
+  background-attachment: fixed;
+}
 
 .launchScreen {
   position: fixed;
@@ -26,90 +27,108 @@ background-color: black;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 9; /* Make sure it overlays */
+  z-index: 9;
+  /* Make sure it overlays */
 }
 
 .start {
-    animation: exit 2s ease-out forwards;
-    animation-delay: 10s;
+  animation: exit 2s ease-out forwards;
+  animation-delay: 10s;
 }
 
 @keyframes exit {
-    0% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-    }
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 .floatText {
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 20px;
-    
-    opacity: 0%;
-    left: 50%;
-    animation: fadeAfter 2s ease-in-out forwards;
-    animation-delay: 8s;
-    position: absolute;
-    transform: translate(-50%, -50%)
-  }
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 20px;
 
-  @keyframes fadeAfter {
-    
-    0% {
-        opacity: 0;
-        top: 100%;
-    }    
-    100% {
-        opacity: 1;
-        top: 95%;
-    }
-  }
+  opacity: 0%;
+  left: 50%;
+  animation: fadeAfter 2s ease-in-out forwards;
+  animation-delay: 8s;
+  position: absolute;
+  transform: translate(-50%, -50%)
+}
 
-  .loader {
-    border: 3px solid #f3f3f36f; /* Light grey */
-    border-top: 3px solid #020202; /* Blue */
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    animation: spin 2s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-.animated-image {
-    position: absolute;
-    left: 50%;
+@keyframes fadeAfter {
+
+  0% {
     opacity: 0;
-    transform: translate(-50%, -50%);
-    animation: fadeAndRise 4s ease-in-out forwards;
-    
-    /* Improved sizing logic */
-    width: 5%; /* Use viewport width units for viewport-relative scaling */
-    min-width: 60px; /* Absolute minimum size */
-    max-width: 300px; /* Absolute maximum size */
-    height: auto; /* Maintain aspect ratio */
+    top: 100%;
   }
-  
-  /* Desktop-specific adjustments */
-  @media screen and (min-width: 1024px) {
-    .animated-image {
-      width: 10vw; /* Slightly smaller relative size */
-    }
+
+  100% {
+    opacity: 1;
+    top: 95%;
   }
-  
-  /* Mobile-first fallback */
-  @media screen and (max-width: 480px) {
-    .animated-image {
-      width: 25vw; /* Larger relative size on mobile */
-      max-width: 200px; /* Smaller absolute maximum */
-    }
+}
+
+.loader {
+  border: 3px solid #f3f3f36f;
+  /* Light grey */
+  border-top: 3px solid #020202;
+  /* Blue */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  /* Background canvas */
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animated-image {
+  position: absolute;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: fadeAndRise 4s ease-in-out forwards;
+
+  /* Improved sizing logic */
+  width: 5%;
+  /* Use viewport width units for viewport-relative scaling */
+  min-width: 60px;
+  /* Absolute minimum size */
+  max-width: 300px;
+  /* Absolute maximum size */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+/* Desktop-specific adjustments */
+@media screen and (min-width: 1024px) {
+  .animated-image {
+    width: 10vw;
+    /* Slightly smaller relative size */
+  }
+}
+
+/* Mobile-first fallback */
+@media screen and (max-width: 480px) {
+  .animated-image {
+    width: 25vw;
+    /* Larger relative size on mobile */
+    max-width: 200px;
+    /* Smaller absolute maximum */
+  }
+}
+
+/* Background canvas */
 #dotCanvas {
   position: fixed;
   top: 0;
@@ -121,60 +140,71 @@ background-color: black;
 }
 
 
-  @keyframes fadeAndRise {
-    0% {
-        opacity: 0;
-        top: 50%;
-    }    
-    33% {
-        opacity: 0.9;
-        top: 50%;
-    }
-    100% {
-        opacity: 1;
-        top: 20%;
-    }
+@keyframes fadeAndRise {
+  0% {
+    opacity: 0;
+    top: 50%;
   }
 
-  
+  33% {
+    opacity: 0.9;
+    top: 50%;
+  }
+
+  100% {
+    opacity: 1;
+    top: 20%;
+  }
+}
+
+
+.animated-profile {
+  position: absolute;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: fadeAndRise 6s ease-in-out forwards;
+
+  /* Improved sizing logic */
+  width: 5%;
+  /* Use viewport width units for viewport-relative scaling */
+  min-width: 60px;
+  /* Absolute minimum size */
+  max-width: 300px;
+  /* Absolute maximum size */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+/* Desktop-specific adjustments */
+@media screen and (min-width: 1024px) {
   .animated-profile {
-    position: absolute;
-    left: 50%;
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    animation: fadeAndRise 6s ease-in-out forwards;
-    
-    /* Improved sizing logic */
-    width: 5%; /* Use viewport width units for viewport-relative scaling */
-    min-width: 60px; /* Absolute minimum size */
-    max-width: 300px; /* Absolute maximum size */
-    height: auto; /* Maintain aspect ratio */
+    width: 10vw;
+    /* Slightly smaller relative size */
   }
-  
-  /* Desktop-specific adjustments */
-  @media screen and (min-width: 1024px) {
-    .animated-profile {
-      width: 10vw; /* Slightly smaller relative size */
-    }
+}
+
+/* Mobile-first fallback */
+@media screen and (max-width: 480px) {
+  .animated-profile {
+    width: 25vw;
+    /* Larger relative size on mobile */
+    max-width: 200px;
+    /* Smaller absolute maximum */
   }
-  
-  /* Mobile-first fallback */
-  @media screen and (max-width: 480px) {
-    .animated-profile {
-      width: 25vw; /* Larger relative size on mobile */
-      max-width: 200px; /* Smaller absolute maximum */
-    }
-  }
+}
 
 .profile {
   top: 25%;
   left: 50%;
-position: absolute;  }
- .img-prf {
-  border-radius: 10px;
- }
+  position: absolute;
+}
 
- .info-badge {
+.img-prf {
+  border-radius: 10px;
+}
+
+.info-badge {
   background: rgba(255, 255, 255, 0.1);
   padding: 8px 15px;
   border-radius: 20px;
@@ -184,11 +214,16 @@ position: absolute;  }
 }
 
 @keyframes badgePop {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
+  from {
+    transform: scale(0);
+  }
+
+  to {
+    transform: scale(1);
+  }
 }
 
-.content{
+.content {
   top: 20%;
   left: 20%;
   width: 54%;
@@ -203,11 +238,13 @@ position: absolute;  }
   transition: box-shadow 0.3s;
 
 }
-.content:hover{
+
+.content:hover {
   box-shadow: 0 12px 20px rgba(255, 255, 255, 0.1);
 }
-.content a{
-  color:white;
+
+.content a {
+  color: white;
   font-family: montserrat, sans-serif;
 }
 
@@ -239,6 +276,7 @@ position: absolute;  }
     opacity: 0;
     top: 115%;
   }
+
   50% {
     opacity: 1;
   }
@@ -250,7 +288,8 @@ position: absolute;  }
   gap: 15px;
   max-width: 800px;
   margin: auto;
-  position: relative; /* Make it a stacking context */
+  position: relative;
+  /* Make it a stacking context */
 }
 
 .game-card {
@@ -265,7 +304,63 @@ position: absolute;  }
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transform: scale(1);
-  transition: transform 0.3s ease; /* Smooth scale transition */
+  transition: transform 0.3s ease;
+  /* Smooth scale transition */
+}
+
+.info {
+  display: flex;
+  gap: 1vw;
+  margin-bottom: 2vw;
+  flex-wrap: wrap;
+  margin-top: 3%;
+  justify-content: center;
+}
+
+.info-card {
+  width: 29%;
+  height: 120px;
+  background: linear-gradient(145deg, #1a1a1a, #292929);
+  border-radius: 16px;
+  padding: 5px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transform: scale(1);
+  transition: transform 0.3s ease;
+  /* Smooth scale transition */
+}
+
+.info-card:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1);
+  filter: brightness(1.1);
+}
+
+.info-card ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.info-card h2 {
+  color: white;
+  font-size: 1.2rem;
+  margin-left: 30px;
+  margin-right: 330px;
+  margin-bottom: 10px;
+}
+
+.info-card p {
+  color: rgba(255, 255, 255, 0.581);
+  font-size: 1rem;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .game-card:hover {
@@ -291,16 +386,16 @@ position: absolute;  }
 .game-card:hover .game-title {
   display: block;
   opacity: 1;
-  transition: opacity 1s ease; 
+  transition: opacity 1s ease;
 }
 
 
 
 
 .game-title p {
-  color:white;
+  color: white;
   opacity: 1;
- 
+
 }
 
 .game-button {
@@ -311,8 +406,8 @@ position: absolute;  }
 }
 
 .game-button img {
-  width: 120px;
-  height: 120px;
+  width: 145px;
+  height: 145px;
   object-fit: cover;
   border-radius: 12px;
   transition: transform 0.3s ease, filter 0.3s ease;
@@ -345,12 +440,13 @@ position: absolute;  }
   justify-content: center;
 }
 
-.home{
+.home {
   background-image: linear-gradient(black, white);
   width: 100%;
   height: 50%;
- 
+
 }
+
 .section1 {
   padding-top: 40%;
 }
@@ -369,16 +465,19 @@ position: absolute;  }
 
 .gameLaunch {
   position: absolute;
-    left: 50%;
-    opacity: 0;
-    transform: translate(-50%, -50%);
-    animation: fadeExit 4s ease-in-out forwards;
-    top:50%;
-    /* Improved sizing logic */
-    min-width: 60px; /* Absolute minimum size */
-    max-width: 300px; /* Absolute maximum size */
-    height: auto; /* Maintain aspect ratio */
-    
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: fadeExit 4s ease-in-out forwards;
+  top: 50%;
+  /* Improved sizing logic */
+  min-width: 60px;
+  /* Absolute minimum size */
+  max-width: 300px;
+  /* Absolute maximum size */
+  height: auto;
+  /* Maintain aspect ratio */
+
 }
 
 @keyframes fadeExit {
@@ -386,19 +485,23 @@ position: absolute;  }
     opacity: 0;
     transform: translate(-50%, -50%) scale(1);
   }
+
   50% {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1.3); /* 1% larger */
+    transform: translate(-50%, -50%) scale(1.3);
+    /* 1% larger */
     filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
   }
+
   60% {
     opacity: 0;
     filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
   }
-  
+
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0); /* shrink to nothing */
+    transform: translate(-50%, -50%) scale(0);
+    /* shrink to nothing */
   }
 }
 
@@ -416,7 +519,7 @@ position: absolute;  }
 }
 
 
-.home-but img{
+.home-but img {
   height: 40%;
   cursor: pointer;
   transition: transform 0.2s;
@@ -458,26 +561,31 @@ position: absolute;  }
   border-radius: 50%;
   border-color: white;
   transition: all 0.3s ease;
-  display: inline-flex; /* Use inline-flex for centering inside the circle */
+  display: inline-flex;
+  /* Use inline-flex for centering inside the circle */
   align-items: center;
   justify-content: center;
-  
+
 }
 
 .nav-icon {
-  
-  transition: all 0.3s ease; /* Smooth transition for hover effect */
+
+  transition: all 0.3s ease;
+  /* Smooth transition for hover effect */
 }
 
 
 .nav-icon:hover {
-  opacity: 1;      /* Make the icon visible when hovered */
-  background-color: rgba(0, 0, 0, 0.1); /* Light background circle */
+  opacity: 1;
+  /* Make the icon visible when hovered */
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Light background circle */
 }
 
 /* Make icons fade in when hovered */
 .nav-icon:hover {
-  transform: scale(1.1); /* Slightly increase size on hover */
+  transform: scale(1.1);
+  /* Slightly increase size on hover */
 }
 
 .navbar-right {
@@ -499,7 +607,36 @@ position: absolute;  }
   margin-bottom: 2vw;
   flex-wrap: wrap;
   margin-top: 10%;
-  margin-left: 5%;
-
+  justify-content: center;
 }
 
+.search-bar {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+  color: rgba(255, 255, 255, 0.273);
+  background-color: #5050503b;
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  top: 5%;
+  animation: search 3s ease-in-out forwards;
+}
+@keyframes search {
+  0% {
+    opacity: 0;
+    top: 0%;
+  }
+
+  10% {
+    opacity: 1;
+    top: 5%;
+  }
+  90%{
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

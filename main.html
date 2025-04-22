@@ -19,13 +19,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="CW1 Assets">
-    <style>
-        
-    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#131212">
 </head>
+
 <canvas id="dotCanvas"></canvas>
+<script src="script.js"></script>
 
 <body>
   
@@ -70,116 +69,42 @@
 
   </div>
 
-  <script>
-
-    const play = document.getElementById('play');
-
-
+  <script>const play = document.getElementById('play');
+    const display = document.getElementById('gamePlayed');
+  
     function setCookie(name, value, days) {
       const expires = new Date(Date.now() + days * 864e5).toUTCString();
-      document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
     }
-
-    // When user clicks a game button, set the cookie and redirect to launch page
-    document.getElementById('eaglercraft-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'Eaglercraft', 30);
-      window.location.href = '/launch.html';
-    });
-
-    document.getElementById('cattle-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'cattle', 30);
-      window.location.href = '/launch.html';
-    });
-
-    document.getElementById('gamec-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'frlgnds', 30);
-      window.location.href = '/launch.html';
-    });
-
-    document.getElementById('egg').addEventListener('click', function () {
-      setCookie('lastGame', 'egg', 30);
-      window.location.href = '/launch.html';
-    });
-
+  
+    function getCookie(name) {
+      return document.cookie.split('; ').reduce((acc, cookie) => {
+        const [k, v] = cookie.split('=');
+        return k === name ? decodeURIComponent(v) : acc;
+      }, null);
+    }
+  
+    const lastGame = getCookie('lastGame');
     if (lastGame) {
       display.textContent = 'Last Played: ' + lastGame;
     } else {
       play.style.display = 'block';
     }
-
+  
     play.addEventListener('click', function () {
       window.location.href = '/launch.html';
     });
+  
+    const buttons = document.querySelectorAll('.game-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', function () {
+        const game = this.getAttribute('data-game');
+        setCookie('lastGame', game, 30);
+        display.textContent = 'Last Played: ' + game;
+        window.location.href = '/launch.html';
+      });
+    });</script>
 
-    const contentList = document.getElementsByClassName('content');
-    const display = contentList.getElementById('gamePlayed');
-      buttons.forEach(button => {
-        button.addEventListener('click', function() {
-          const game = this.textContent;
-          setCookie('lastGame', game, 30); // 30 days
-          display.textContent = 'Last Played: ' + game;
-        });
-      });
-    
-  </script>
-<script>
-    const canvas = document.getElementById('dotCanvas');
-    const ctx = canvas.getContext('2d');
-  
-    let width, height;
-    const spacing = 40;
-    let dots = [];
-    let mouse = { x: -1000, y: -1000 }; // off-screen initially
-  
-    function resizeCanvas() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-      createDots();
-    }
-  
-    function createDots() {
-      dots = [];
-      for (let x = 0; x < width; x += spacing) {
-        for (let y = 0; y < height; y += spacing) {
-          dots.push({ x, y, alpha: 0 });
-        }
-      }
-    }
-  
-    function drawDots() {
-      ctx.clearRect(0, 0, width, height);
-      dots.forEach(dot => {
-        const dx = mouse.x - dot.x;
-        const dy = mouse.y - dot.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const maxDist = 100;
-  
-        // Fade logic
-        let targetAlpha = dist < maxDist ? 1 - dist / maxDist : 0;
-        dot.alpha += (targetAlpha - dot.alpha) * 0.1; // Smooth transition
-  
-        ctx.beginPath();
-        ctx.arc(dot.x, dot.y, 3, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha})`;
-        ctx.fill();
-      });
-    }
-  
-    function animate() {
-      drawDots();
-      requestAnimationFrame(animate);
-    }
-  
-    window.addEventListener('mousemove', e => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-  
-    window.addEventListener('resize', resizeCanvas);
-  
-    resizeCanvas();
-    animate();
-  </script>
   
 </body>
 </html>
