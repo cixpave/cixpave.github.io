@@ -8,7 +8,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow:visible;
   color: white;
   background-size: 88px 88px;
   background-image: radial-gradient(circle, #ffffff2a 1px, rgba(255, 255, 255, 0.035) 1px);
@@ -365,8 +365,8 @@ body {
 
 .game-card:hover {
   transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1);
-  filter: brightness(1.1);
+  box-shadow: 0 0px 12px rgba(255, 255, 255, 0.601);
+  filter: brightness(1.005);
 }
 
 .game-title {
@@ -383,11 +383,6 @@ body {
   opacity: 0;
 }
 
-.game-card:hover .game-title {
-  display: block;
-  opacity: 1;
-  transition: opacity 1s ease;
-}
 
 
 
@@ -540,6 +535,7 @@ body {
   display: flex;
   align-items: center;
   gap: 18px;
+  position: ;
 }
 
 .home-icon {
@@ -663,4 +659,77 @@ body {
 
   box-shadow: 0 12px 24px rgba(255, 255, 255, 0.1);
   filter: brightness(1.1);
+}
+
+.panel {
+  background: linear-gradient(180deg, #dfdbdb3a, #2929291b);
+  padding: 5px;
+
+  width: 18%;
+  height: 90%;
+  
+}
+.side-panel {
+  border-radius: 12px;
+  height: 80%;
+  width: 18%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  margin-left: -45%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.covers {
+  width: 100%;
+  height: 100%;
+  background-color: #0202023b;
+  animation: fadeIn 1s;
+
+}
+
+@fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.side-panel a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.side-panel a:hover {
+  color: #f1f1f1;
+}
+
+.side-panel .close-btn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+.open-button {
+  font-size: 30px;
+  cursor: pointer;
 }
