@@ -1,0 +1,142 @@
+
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW1 MX</title>
+  <meta property="og:image" content="New Project (12) (1).png" />
+  <meta property="og:site_name" content="CW1 Assets" />
+  <meta property="og:locale" content="en_US" />
+  <link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <meta name="mobile-web-app-capable" content="yes"> 
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="CW1 Assets">
+  <meta name="theme-color" content="#131212">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #131212;
+      overflow: hidden;
+    }
+
+    .iframe-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 60vw;
+      height: 60vh;
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .navbar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 10px;
+      z-index: 2;
+    }
+
+    .home-button img {
+      width: 40px;
+      height: 40px;
+    }
+
+    canvas#dotCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
+</head>
+
+<canvas id="dotCanvas"></canvas>
+
+<body>
+  <nav class="navbar">
+    <a href="/main" class="home-button">
+      <img src="New Project (12) (2).png" alt="Home">
+    </a>
+  </nav>
+
+  <div class="iframe-container">
+    <iframe id="game-element" allowfullscreen="" allow="autoplay; fullscreen; camera; focus-without-user-activation *; monetization; gamepad; keyboard-map *; xr-spatial-tracking; clipboard-write; web-share; accelerometer; magnetometer; gyroscope; display-capture" name="gameFrame" scrolling="no" sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-scripts allow-same-origin allow-downloads" src="//games.poki.com/458768/motox3m?tag=pg-abc97ca6b94fcb9e9f0820ae31235075cca93669&amp;site_id=3&amp;iso_lang=en&amp;country=US&amp;poki_url=https://poki.com/en/g/moto-x3m&amp;hoist=yes&amp;nonPersonalized=n&amp;cloudsavegames=n&amp;familyFriendly=n&amp;categories=1,9,51,136,260,738,929,1123,1126,1140,1143,1147,1156,1159,1160,1190,1193&amp;special_condition=landing" title="Game" class="Clsn52HE2ZzhoBMbiAF6"></iframe>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('dotCanvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    const spacing = 40;
+    let dots = [];
+    let mouse = { x: -1000, y: -1000 };
+
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+      createDots();
+    }
+
+    function createDots() {
+      dots = [];
+      for (let x = 0; x < width; x += spacing) {
+        for (let y = 0; y < height; y += spacing) {
+          dots.push({ x, y, alpha: 0 });
+        }
+      }
+    }
+
+    function drawDots() {
+      ctx.clearRect(0, 0, width, height);
+      dots.forEach(dot => {
+        const dx = mouse.x - dot.x;
+        const dy = mouse.y - dot.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const maxDist = 100;
+
+        let targetAlpha = dist < maxDist ? 1 - dist / maxDist : 0;
+        dot.alpha += (targetAlpha - dot.alpha) * 0.1;
+
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha})`;
+        ctx.fill();
+      });
+    }
+
+    function animate() {
+      drawDots();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('mousemove', e => {
+      mouse.x = e.clientX;
+      mouse.y = e.clientY;
+    });
+
+    window.addEventListener('resize', resizeCanvas);
+
+    resizeCanvas();
+    animate();
+  </script>
+</body>
+</html>
