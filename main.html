@@ -36,7 +36,7 @@
   <nav class="xbox-navbar">
     <div class="navbar-left">
       <a href="/" class="home-but">
-        <img src="New Project (12) (2).png" alt="Home" class="home-icon">
+        <img src="logo.png" alt="Home" class="home-icon">
       </a>
     </div>
     <div class="navbar-center">
@@ -263,14 +263,15 @@ window.addEventListener("gamepaddisconnected", (e) => {
   const focusableElements = Array.from(document.querySelectorAll(focusableSelectors.join(',')));
   let focusedIndex = 0;
   let lastMoveTime = 0;
+  let gamepadConnected = false;
 
   // Add CSS for focus highlight
   const style = document.createElement('style');
   style.textContent = `
     .focused {
       transform: translateY(-5px) scale(1.05);
-  box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
-  filter: brightness(1.005);
+      box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
+      filter: brightness(1.005);
     }
   `;
   document.head.appendChild(style);
@@ -303,6 +304,7 @@ window.addEventListener("gamepaddisconnected", (e) => {
     const gp = gamepads[0];
 
     if (gp) {
+      gamepadConnected = true;
       // D-pad/left stick navigation (debounced to avoid rapid skipping)
       const threshold = 0.5;
       const stickY = gp.axes[1];
@@ -336,6 +338,8 @@ window.addEventListener("gamepaddisconnected", (e) => {
         activateElement(focusedIndex);
         lastMoveTime = now; // Prevent multiple rapid activations
       }
+    } else {
+      gamepadConnected = false;
     }
     requestAnimationFrame(gamepadLoop);
   }
@@ -344,39 +348,25 @@ window.addEventListener("gamepaddisconnected", (e) => {
     gamepadLoop();
   });
 
-  // Optional: Keyboard fallback (arrow keys and Enter)
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowDown' || e.key === 'Tab') {
-      focusedIndex = (focusedIndex + 1) % focusableElements.length;
-      focusElement(focusedIndex);
-      e.preventDefault();
-    }
-    if (e.key === 'ArrowUp') {
-      focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
-      focusElement(focusedIndex);
-      e.preventDefault();
-    }
-    if (e.key === 'ArrowLeft') {
-      focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
-      focusElement(focusedIndex);
-      e.preventDefault();
-    }
-    if (e.key === 'ArrowRight') {
-      focusedIndex = (focusedIndex + 1) % focusableElements.length;
-      focusElement(focusedIndex);
-      e.preventDefault();
-    }
-    if (e.key === 'Enter' || e.key === ' ') {
-      activateElement(focusedIndex);
-      e.preventDefault();
-    }
+  window.addEventListener('gamepaddisconnected', () => {
+    gamepadConnected = false;
+  });
+
+
   });
 
   // If gamepad is already connected on load
   if (navigator.getGamepads && navigator.getGamepads()[0]) {
     gamepadLoop();
+    gamepadConnected = true;
+  } else {
+    // Apply the style even if no gamepad is initially connected
+    const initialFocusedElement = focusableElements[focusedIndex];
+    if (initialFocusedElement) {
+      initialFocusedElement.classList.add('focused');
+    }
   }
-})();
+;
 </script>
 </script>
 <script src="/script.js"></script>

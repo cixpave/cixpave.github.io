@@ -1,106 +1,333 @@
+<html>
 
-
-<html><head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CW1</title>
-      
-  
-  
-      <meta property="og:image" content="New Project (12) (1).png" />
-      <meta property="og:site_name" content="CW1 Assets" />
-      <meta property="og:locale" content="en_US" />
-      
+
+  <meta name="description" content="CW1 Assets">
+
+  <meta property="og:image" content="/New Project (12) (1).png" />
+  <meta property="og:site_name" content="CW1 Assets" />
+  <meta property="og:locale" content="en_US" />
+
+  <link rel="manifest" href="/manifest.json">
   <link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <meta name="mobile-web-app-capable" content="yes"> 
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="CW1 Assets">
-  <style>
-      
-  </style>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#131212">
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
 </head>
 <canvas id="dotCanvas"></canvas>
-
 <body>
+  <div id="overlay" class="overlay" onclick="closeNav()"></div>
 
-  <nav class="navbar">
-      <a href="/" class="home-button">
-        <img src="New Project (12) (2).png" alt="Home">
+
+  <nav class="xbox-navbar">
+    <div class="navbar-left">
+      <a href="/" class="home-but">
+        <img src="logo.png" alt="Home" class="home-icon">
       </a>
-      </nav>
-      <div class="content">
-     
-        <p style="font-size: 10px;">remaking go <a href="/main">here</a></p>
-        <p>Dev plans</p>
-        <li>create console menu</li>
-      </div>
-
+    </div>
+    <div class="navbar-center">
       
-<script>
-  const canvas = document.getElementById('dotCanvas');
-  const ctx = canvas.getContext('2d');
+    </div>
+    <div class="navbar-right">
+      <span class="clock" id="clock">--:-- -m</span>
+    </div>
+  </nav>
 
-  let width, height;
-  const spacing = 40;
-  let dots = [];
-  let mouse = { x: -1000, y: -1000 }; // off-screen initially
+  
+    
+  <div class="content">
+    <div>
+      <h2>About</h2>
+      <p>Here you'll find all the things that will (eventually) be added to the website.</p>
+    </div>
+   <button class="hmbutton"><a href="/main.html">Games</a></button>
+  </div>
 
-  function resizeCanvas() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-    createDots();
-  }
+  <p class="search-bar" id='search-bar'style="display: none;">Working on it</p>
 
-  function createDots() {
-    dots = [];
-    for (let x = 0; x < width; x += spacing) {
-      for (let y = 0; y < height; y += spacing) {
-        dots.push({ x, y, alpha: 0 });
+  <div id="cover" class="covers"></div>
+  <div id="mySidepanel" class="side-panel">
+  
+    <a href="javascript:void(0)"  onclick="closeNav()">&times;</a>
+    <a href="#">Home</a>
+    <a href="#">Games</a>
+    <a href="#">Chat</a>
+    <a onclick="settings()">Settings</a>
+</div>
+<div id="SideMenu" class="side-menu">
+  
+ <p>WIP</p>
+</div>
+  <script>
+    function openNav() {
+      
+        document.getElementById("mySidepanel").style.marginLeft = "5%";
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function closeNav() {
+     
+        document.getElementById("mySidepanel").style.marginLeft = "-25%";
+        document.getElementById("SideMenu").style.marginLeft = "-25%";
+        document.getElementById("overlay").style.display = "none";
+
+    }
+
+    function prevNav() {
+      document.getElementById("SideMenu").style.marginLeft = "-25%";
+      document.getElementById("overlay").onclick = "closeNav()";
+      document.getElementById("overlay").style.zIndex = "12";
+      document.getElementById("overlay").onclick = function() { closeNav(); }
+
+    }
+
+    document.getElementById('search').addEventListener('click', function () {
+        document.getElementById('search-bar').style.display = 'block';
+    });
+
+    function settings() {
+      document.getElementById("SideMenu").style.marginLeft = "8%";
+      document.getElementById("overlay").style.zIndex = "14";
+      document.getElementById("overlay").onclick = function() { prevNav(); }
+    }
+
+
+</script>
+
+  <script>document.getElementById('search').addEventListener('click', function () {
+    document.getElementById('search-bar').style.display = 'block';
+  });</script>
+
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'pm' : 'am';
+
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 becomes 12
+
+      const timeString = `${hours}:${minutes} ${ampm}`;
+      document.getElementById("clock").textContent = timeString;
+    }
+
+    updateTime();
+    setInterval(updateTime, 1000);
+
+  </script>
+  <script>  // Game set
+    
+  
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days * 864e5).toUTCString();
+      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
+    }
+  
+    function getCookie(name) {
+      return document.cookie.split('; ').reduce((acc, cookie) => {
+        const [k, v] = cookie.split('=');
+        return k === name ? decodeURIComponent(v) : acc;
+      }, null);
+    }
+  
+    
+
+    function setCookie(name, value, days) {
+      const expires = new Date(Date.now() + days * 864e5).toUTCString();
+      document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
+    }
+
+    // When user clicks a game button, set the cookie and redirect to launch page
+    document.getElementById('eaglercraft-btn').addEventListener('click', function () {
+      setCookie('lastGame', 'Eaglercraft', 30);
+      window.location.href = '/launch.html';
+    });
+
+    document.getElementById('cattle-btn').addEventListener('click', function () {
+      setCookie('lastGame', 'cattle', 30);
+      window.location.href = '/launch.html';
+    });
+
+    document.getElementById('gamec-btn').addEventListener('click', function () {
+      setCookie('lastGame', 'frlgnds', 30);
+      window.location.href = '/launch.html';
+    });
+
+    document.getElementById('egg').addEventListener('click', function () {
+      setCookie('lastGame', 'egg', 30);
+      window.location.href = '/launch.html';
+    });
+
+    document.getElementById('m3xbtn').addEventListener('click', function () {
+      setCookie('lastGame', 'm3x', 30);
+      window.location.href = '/launch.html';
+    });
+  
+    play.addEventListener('click', function () {
+      window.location.href = '/launch.html';
+    });
+  
+    const buttons = document.querySelectorAll('.game-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', function () {
+        const game = this.getAttribute('data-game');
+        setCookie('lastGame', game, 30);
+        display.textContent = 'Last Played: ' + game;
+        window.location.href = '/launch.html';
+      });
+    });
+
+    window.addEventListener("gamepadconnected", (e) => {
+  console.log("Gamepad connected:", e.gamepad);
+  startGamepadLoop();
+});
+
+window.addEventListener("gamepaddisconnected", (e) => {
+  console.log("Gamepad disconnected:", e.gamepad);
+  stopGamepadLoop();
+});
+
+
+  </script>
+  
+  <script>
+(function() {
+  // Gather all focusable elements: game cards and nav/icon buttons
+  const focusableSelectors = [
+    '.game-button',
+    '.nav-icon',
+    '.home-but',
+    '.side-panel a'
+  ];
+  const focusableElements = Array.from(document.querySelectorAll(focusableSelectors.join(',')));
+  let focusedIndex = 0;
+  let lastMoveTime = 0;
+  let gamepadConnected = false;
+
+  // Add CSS for focus highlight
+  const style = document.createElement('style');
+  style.textContent = `
+    .focused {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
+      filter: brightness(1.005);
+    }
+  `;
+  document.head.appendChild(style);
+
+  function focusElement(index) {
+    focusableElements.forEach(el => el.classList.remove('focused'));
+    if (focusableElements[index]) {
+      focusableElements[index].classList.add('focused');
+      // Optionally scroll into view if offscreen
+      if (typeof focusableElements[index].scrollIntoView === 'function') {
+        focusableElements[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
       }
     }
   }
 
-  function drawDots() {
-    ctx.clearRect(0, 0, width, height);
-    dots.forEach(dot => {
-      const dx = mouse.x - dot.x;
-      const dy = mouse.y - dot.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      const maxDist = 100;
-
-      // Fade logic
-      let targetAlpha = dist < maxDist ? 1 - dist / maxDist : 0;
-      dot.alpha += (targetAlpha - dot.alpha) * 0.1; // Smooth transition
-
-      ctx.beginPath();
-      ctx.arc(dot.x, dot.y, 3, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 255, 255, ${dot.alpha})`;
-      ctx.fill();
-    });
+  function activateElement(index) {
+    const el = focusableElements[index];
+    if (el) {
+      el.click();
+    }
   }
 
-  function animate() {
-    drawDots();
-    requestAnimationFrame(animate);
+  // Initial focus
+  focusElement(focusedIndex);
+
+  // Gamepad polling loop
+  function gamepadLoop() {
+    const now = Date.now();
+    const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+    const gp = gamepads[0];
+
+    if (gp) {
+      gamepadConnected = true;
+      // D-pad/left stick navigation (debounced to avoid rapid skipping)
+      const threshold = 0.5;
+      const stickY = gp.axes[1];
+      const up = gp.buttons[12]?.pressed || stickY < -threshold;
+      const down = gp.buttons[13]?.pressed || stickY > threshold;
+      const left = gp.buttons[14]?.pressed || gp.axes[0] < -threshold;
+      const right = gp.buttons[15]?.pressed || gp.axes[0] > threshold;
+
+      if (now - lastMoveTime > 200) { // 200ms debounce
+        if (up) {
+          focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
+          focusElement(focusedIndex);
+          lastMoveTime = now;
+        } else if (down) {
+          focusedIndex = (focusedIndex + 1) % focusableElements.length;
+          focusElement(focusedIndex);
+          lastMoveTime = now;
+        } else if (left) {
+          focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
+          focusElement(focusedIndex);
+          lastMoveTime = now;
+        } else if (right) {
+          focusedIndex = (focusedIndex + 1) % focusableElements.length;
+          focusElement(focusedIndex);
+          lastMoveTime = now;
+        }
+      }
+
+      // "A" button (button 0) to activate
+      if (gp.buttons[0]?.pressed) {
+        activateElement(focusedIndex);
+        lastMoveTime = now; // Prevent multiple rapid activations
+      }
+    } else {
+      gamepadConnected = false;
+    }
+    requestAnimationFrame(gamepadLoop);
   }
 
-  window.addEventListener('mousemove', e => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
+  window.addEventListener('gamepadconnected', () => {
+    gamepadLoop();
   });
 
-  window.addEventListener('resize', resizeCanvas);
+  window.addEventListener('gamepaddisconnected', () => {
+    gamepadConnected = false;
+  });
 
-  resizeCanvas();
-  animate();
+
+  });
+
+  // If gamepad is already connected on load
+  if (navigator.getGamepads && navigator.getGamepads()[0]) {
+    gamepadLoop();
+    gamepadConnected = true;
+  } else {
+    // Apply the style even if no gamepad is initially connected
+    const initialFocusedElement = focusableElements[focusedIndex];
+    if (initialFocusedElement) {
+      initialFocusedElement.classList.add('focused');
+    }
+  }
+;
 </script>
+</script>
+<script src="/script.js"></script>
+
 
 </body>
+
 </html>

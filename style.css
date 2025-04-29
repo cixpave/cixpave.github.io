@@ -412,6 +412,22 @@ body {
   padding: 0;
 }
 
+.hmbutton {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  color: #020202;
+  background-color: rgba(255, 255, 255, 0.912);
+  padding: 8px;
+  border-radius: 12px;
+}
+
+.hmbutton a {
+  color: #020202;
+  text-decoration: none;
+}
+
 .game-button img {
   width: 145px;
   height: 145px;
@@ -543,12 +559,7 @@ body {
   z-index: 10;
 }
 
-.navbar-left {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  position: ;
-}
+
 
 .home-icon {
   width: 36px;
@@ -706,7 +717,7 @@ body {
 
 }
 
-@fadeIn {
+@keyframes fadeIn {
   0% {
     opacity: 0;
   }
