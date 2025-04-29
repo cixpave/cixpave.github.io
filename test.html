@@ -30,6 +30,8 @@
 </head>
 <canvas id="dotCanvas"></canvas>
 <body>
+  <div id="overlay" class="overlay" onclick="closeNav()"></div>
+
 
   <nav class="xbox-navbar">
     <div class="navbar-left">
@@ -109,22 +111,46 @@
     <a href="#">Home</a>
     <a href="#">Games</a>
     <a href="#">Chat</a>
-    <a href="#">Settings</a>
+    <a onclick="settings()">Settings</a>
+</div>
+<div id="SideMenu" class="side-menu">
+  
+ <p>WIP</p>
 </div>
   <script>
     function openNav() {
       
         document.getElementById("mySidepanel").style.marginLeft = "5%";
+        document.getElementById("overlay").style.display = "block";
     }
 
     function closeNav() {
      
-        document.getElementById("mySidepanel").style.marginLeft = "-15%";
+        document.getElementById("mySidepanel").style.marginLeft = "-25%";
+        document.getElementById("SideMenu").style.marginLeft = "-25%";
+        document.getElementById("overlay").style.display = "none";
+
+    }
+
+    function prevNav() {
+      document.getElementById("SideMenu").style.marginLeft = "-25%";
+      document.getElementById("overlay").onclick = "closeNav()";
+      document.getElementById("overlay").style.zIndex = "12";
+      document.getElementById("overlay").onclick = function() { closeNav(); }
+
     }
 
     document.getElementById('search').addEventListener('click', function () {
         document.getElementById('search-bar').style.display = 'block';
     });
+
+    function settings() {
+      document.getElementById("SideMenu").style.marginLeft = "8%";
+      document.getElementById("overlay").style.zIndex = "14";
+      document.getElementById("overlay").onclick = function() { prevNav(); }
+    }
+
+
 </script>
 
   <script>document.getElementById('search').addEventListener('click', function () {
