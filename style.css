@@ -395,7 +395,13 @@ body {
   opacity: 0;
 }
 
-
+.focused {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
+  filter: brightness(1.005);
+  outline: none; /* Remove default focus outline */
+  border-radius: 12px;
+}
 
 
 

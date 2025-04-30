@@ -73,45 +73,9 @@
   
  <p>WIP</p>
 </div>
-  <script>
-    function openNav() {
-      
-        document.getElementById("mySidepanel").style.marginLeft = "5%";
-        document.getElementById("overlay").style.display = "block";
-    }
+  
 
-    function closeNav() {
-     
-        document.getElementById("mySidepanel").style.marginLeft = "-25%";
-        document.getElementById("SideMenu").style.marginLeft = "-25%";
-        document.getElementById("overlay").style.display = "none";
-
-    }
-
-    function prevNav() {
-      document.getElementById("SideMenu").style.marginLeft = "-25%";
-      document.getElementById("overlay").onclick = "closeNav()";
-      document.getElementById("overlay").style.zIndex = "12";
-      document.getElementById("overlay").onclick = function() { closeNav(); }
-
-    }
-
-    document.getElementById('search').addEventListener('click', function () {
-        document.getElementById('search-bar').style.display = 'block';
-    });
-
-    function settings() {
-      document.getElementById("SideMenu").style.marginLeft = "8%";
-      document.getElementById("overlay").style.zIndex = "14";
-      document.getElementById("overlay").onclick = function() { prevNav(); }
-    }
-
-
-</script>
-
-  <script>document.getElementById('search').addEventListener('click', function () {
-    document.getElementById('search-bar').style.display = 'block';
-  });</script>
+  
 
 
   <script>
@@ -132,199 +96,123 @@
     setInterval(updateTime, 1000);
 
   </script>
-  <script>  // Game set
-    
+ 
   
-    function setCookie(name, value, days) {
-      const expires = new Date(Date.now() + days * 864e5).toUTCString();
-      document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/`;
-    }
-  
-    function getCookie(name) {
-      return document.cookie.split('; ').reduce((acc, cookie) => {
-        const [k, v] = cookie.split('=');
-        return k === name ? decodeURIComponent(v) : acc;
-      }, null);
-    }
-  
-    
+ <script>
+  (function () {
+      // Gather all focusable elements: game cards and nav/icon buttons
+      const focusableSelectors = [
+          '.game-button',
+          '.nav-icon',
+          '.home-but',
+          '.side-panel a',
+          '.hmbutton a' // Include the link inside the home button
+      ];
+      const focusableElements = Array.from(document.querySelectorAll(focusableSelectors.join(',')));
+      let focusedIndex = 0;
+      let lastMoveTime = 0;
+      let gamepadConnected = false;
 
-    function setCookie(name, value, days) {
-      const expires = new Date(Date.now() + days * 864e5).toUTCString();
-      document.cookie = name + '=' + encodeURIComponent(value) + '; expires=' + expires + '; path=/';
-    }
+      // Add CSS for focus highlight
+      const style = document.createElement('style');
+      style.textContent = `
+      .focused {
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
+          filter: brightness(1.005);
+          outline: none; /* Remove default focus outline */
+      }
+      `;
+      document.head.appendChild(style);
 
-    // When user clicks a game button, set the cookie and redirect to launch page
-    document.getElementById('eaglercraft-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'Eaglercraft', 30);
-      window.location.href = '/launch.html';
-    });
+      function focusElement(index) {
+          focusableElements.forEach(el => el.classList.remove('focused'));
+          if (focusableElements[index]) {
+              focusableElements[index].classList.add('focused');
+              // Optionally scroll into view if offscreen
+              if (typeof focusableElements[index].scrollIntoView === 'function') {
+                  focusableElements[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+              }
+          }
+      }
 
-    document.getElementById('cattle-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'cattle', 30);
-      window.location.href = '/launch.html';
-    });
+      function activateElement(index) {
+          const el = focusableElements[index];
+          if (el) {
+              el.click();
+          }
+      }
 
-    document.getElementById('gamec-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'frlgnds', 30);
-      window.location.href = '/launch.html';
-    });
+      // Initial focus
+      focusElement(focusedIndex);
 
-    document.getElementById('egg').addEventListener('click', function () {
-      setCookie('lastGame', 'egg', 30);
-      window.location.href = '/launch.html';
-    });
+      // Gamepad polling loop
+      function gamepadLoop() {
+          const now = Date.now();
+          const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+          const gp = gamepads[0];
 
-    document.getElementById('m3xbtn').addEventListener('click', function () {
-      setCookie('lastGame', 'm3x', 30);
-      window.location.href = '/launch.html';
-    });
-  
-    play.addEventListener('click', function () {
-      window.location.href = '/launch.html';
-    });
-  
-    const buttons = document.querySelectorAll('.game-button');
-    buttons.forEach(button => {
-      button.addEventListener('click', function () {
-        const game = this.getAttribute('data-game');
-        setCookie('lastGame', game, 30);
-        display.textContent = 'Last Played: ' + game;
-        window.location.href = '/launch.html';
+          if (gp) {
+              gamepadConnected = true;
+              // D-pad/left stick navigation (debounced to avoid rapid skipping)
+              const threshold = 0.5;
+              const stickY = gp.axes[1];
+              const up = gp.buttons[12]?.pressed || stickY < -threshold;
+              const down = gp.buttons[13]?.pressed || stickY > threshold;
+              const left = gp.buttons[14]?.pressed || gp.axes[0] < -threshold;
+              const right = gp.buttons[15]?.pressed || gp.axes[0] > threshold;
+
+              if (now - lastMoveTime > 200) { // 200ms debounce
+                  if (up) {
+                      focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  } else if (down) {
+                      focusedIndex = (focusedIndex + 1) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  } else if (left) {
+                      focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  } else if (right) {
+                      focusedIndex = (focusedIndex + 1) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  }
+              }
+
+              // "A" button (button 0) to activate
+              if (gp.buttons[0]?.pressed) {
+                  activateElement(focusedIndex);
+                  lastMoveTime = now; // Prevent multiple rapid activations
+              }
+          } else {
+              gamepadConnected = false;
+          }
+          requestAnimationFrame(gamepadLoop);
+      }
+
+      window.addEventListener('gamepadconnected', () => {
+          gamepadLoop();
       });
-    });
 
-    window.addEventListener("gamepadconnected", (e) => {
-  console.log("Gamepad connected:", e.gamepad);
-  startGamepadLoop();
-});
-
-window.addEventListener("gamepaddisconnected", (e) => {
-  console.log("Gamepad disconnected:", e.gamepad);
-  stopGamepadLoop();
-});
+      window.addEventListener('gamepaddisconnected', () => {
+          gamepadConnected = false;
+      });
 
 
-  </script>
-  
-  <script>
-(function() {
-  // Gather all focusable elements: game cards and nav/icon buttons
-  const focusableSelectors = [
-    '.game-button',
-    '.nav-icon',
-    '.home-but',
-    '.side-panel a'
-  ];
-  const focusableElements = Array.from(document.querySelectorAll(focusableSelectors.join(',')));
-  let focusedIndex = 0;
-  let lastMoveTime = 0;
-  let gamepadConnected = false;
-
-  // Add CSS for focus highlight
-  const style = document.createElement('style');
-  style.textContent = `
-    .focused {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
-      filter: brightness(1.005);
-    }
-  `;
-  document.head.appendChild(style);
-
-  function focusElement(index) {
-    focusableElements.forEach(el => el.classList.remove('focused'));
-    if (focusableElements[index]) {
-      focusableElements[index].classList.add('focused');
-      // Optionally scroll into view if offscreen
-      if (typeof focusableElements[index].scrollIntoView === 'function') {
-        focusableElements[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
-      }
-    }
-  }
-
-  function activateElement(index) {
-    const el = focusableElements[index];
-    if (el) {
-      el.click();
-    }
-  }
-
-  // Initial focus
-  focusElement(focusedIndex);
-
-  // Gamepad polling loop
-  function gamepadLoop() {
-    const now = Date.now();
-    const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
-    const gp = gamepads[0];
-
-    if (gp) {
-      gamepadConnected = true;
-      // D-pad/left stick navigation (debounced to avoid rapid skipping)
-      const threshold = 0.5;
-      const stickY = gp.axes[1];
-      const up = gp.buttons[12]?.pressed || stickY < -threshold;
-      const down = gp.buttons[13]?.pressed || stickY > threshold;
-      const left = gp.buttons[14]?.pressed || gp.axes[0] < -threshold;
-      const right = gp.buttons[15]?.pressed || gp.axes[0] > threshold;
-
-      if (now - lastMoveTime > 200) { // 200ms debounce
-        if (up) {
-          focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
-        } else if (down) {
-          focusedIndex = (focusedIndex + 1) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
-        } else if (left) {
-          focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
-        } else if (right) {
-          focusedIndex = (focusedIndex + 1) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
-        }
-      }
-
-      // "A" button (button 0) to activate
-      if (gp.buttons[0]?.pressed) {
-        activateElement(focusedIndex);
-        lastMoveTime = now; // Prevent multiple rapid activations
-      }
-    } else {
-      gamepadConnected = false;
-    }
-    requestAnimationFrame(gamepadLoop);
-  }
-
-  window.addEventListener('gamepadconnected', () => {
-    gamepadLoop();
-  });
-
-  window.addEventListener('gamepaddisconnected', () => {
-    gamepadConnected = false;
-  });
-
-
-  });
+  })();
 
   // If gamepad is already connected on load
   if (navigator.getGamepads && navigator.getGamepads()[0]) {
-    gamepadLoop();
-    gamepadConnected = true;
-  } else {
-    // Apply the style even if no gamepad is initially connected
-    const initialFocusedElement = focusableElements[focusedIndex];
-    if (initialFocusedElement) {
-      initialFocusedElement.classList.add('focused');
-    }
+      gamepadLoop();
+      gamepadConnected = true;
+
   }
-;
+  ;
 </script>
-</script>
+
 <script src="/script.js"></script>
 
 

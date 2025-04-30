@@ -252,122 +252,183 @@ window.addEventListener("gamepaddisconnected", (e) => {
   </script>
   
   <script>
-(function() {
-  // Gather all focusable elements: game cards and nav/icon buttons
-  const focusableSelectors = [
-    '.game-button',
-    '.nav-icon',
-    '.home-but',
-    '.side-panel a'
-  ];
-  const focusableElements = Array.from(document.querySelectorAll(focusableSelectors.join(',')));
-  let focusedIndex = 0;
-  let lastMoveTime = 0;
-  let gamepadConnected = false;
+    (function () {
+        // Gather all potentially focusable elements
+        const allFocusableSelectors = [
+            '.game-button',
+            '.nav-icon',
+            '.side-panel a',
+            '.hmbutton a' // Include the link inside the home button
+        ];
+        let allFocusableElements = Array.from(document.querySelectorAll(allFocusableSelectors.join(',')));
+        let focusedIndex = 3;
+        let lastMoveTime = 0;
+        let gamepadConnected = false;
+        let sidePanelOpen = false;
+        const sidePanel = document.getElementById('mySidepanel');
+        const sideMenu = document.getElementById('SideMenu'); // Get the SideMenu element
 
-  // Add CSS for focus highlight
-  const style = document.createElement('style');
-  style.textContent = `
-    .focused {
-      transform: translateY(-5px) scale(1.05);
-      box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
-      filter: brightness(1.005);
-    }
-  `;
-  document.head.appendChild(style);
+        // Add CSS for focus highlight
+        const style = document.createElement('style');
+        style.textContent = `
+            .focused {
+                transform: translateY(-5px) scale(1.05);
+                box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
+                filter: brightness(1.005);
+                outline: none; /* Remove default focus outline */
+                transition: transform 0.3s ease;
+            }
+        `;
+        document.head.appendChild(style);
 
-  function focusElement(index) {
-    focusableElements.forEach(el => el.classList.remove('focused'));
-    if (focusableElements[index]) {
-      focusableElements[index].classList.add('focused');
-      // Optionally scroll into view if offscreen
-      if (typeof focusableElements[index].scrollIntoView === 'function') {
-        focusableElements[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
-      }
-    }
-  }
-
-  function activateElement(index) {
-    const el = focusableElements[index];
-    if (el) {
-      el.click();
-    }
-  }
-
-  // Initial focus
-  focusElement(focusedIndex);
-
-  // Gamepad polling loop
-  function gamepadLoop() {
-    const now = Date.now();
-    const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
-    const gp = gamepads[0];
-
-    if (gp) {
-      gamepadConnected = true;
-      // D-pad/left stick navigation (debounced to avoid rapid skipping)
-      const threshold = 0.5;
-      const stickY = gp.axes[1];
-      const up = gp.buttons[12]?.pressed || stickY < -threshold;
-      const down = gp.buttons[13]?.pressed || stickY > threshold;
-      const left = gp.buttons[14]?.pressed || gp.axes[0] < -threshold;
-      const right = gp.buttons[15]?.pressed || gp.axes[0] > threshold;
-
-      if (now - lastMoveTime > 200) { // 200ms debounce
-        if (up) {
-          focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
-        } else if (down) {
-          focusedIndex = (focusedIndex + 1) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
-        } else if (left) {
-          focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
-        } else if (right) {
-          focusedIndex = (focusedIndex + 1) % focusableElements.length;
-          focusElement(focusedIndex);
-          lastMoveTime = now;
+        function isElementVisible(el) {
+            if (!el) return false;
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth) &&
+                getComputedStyle(el).display !== 'none' &&
+                getComputedStyle(el).visibility !== 'hidden'
+            );
         }
-      }
 
-      // "A" button (button 0) to activate
-      if (gp.buttons[0]?.pressed) {
-        activateElement(focusedIndex);
-        lastMoveTime = now; // Prevent multiple rapid activations
-      }
-    } else {
-      gamepadConnected = false;
-    }
-    requestAnimationFrame(gamepadLoop);
-  }
+        function getVisibleFocusableElements() {
+            return allFocusableElements.filter(el => {
+                const inSidePanel = sidePanel && sidePanel.contains(el);
+                const inSideMenu = sideMenu && sideMenu.contains(el);
 
-  window.addEventListener('gamepadconnected', () => {
-    gamepadLoop();
-  });
+                return (
+                    isElementVisible(el) &&
+                    (sidePanelOpen ? inSidePanel : !inSidePanel) &&
+                    (sidePanelOpen ? true : !inSideMenu)
+                );
+            });
+        }
 
-  window.addEventListener('gamepaddisconnected', () => {
-    gamepadConnected = false;
-  });
+        let visibleFocusableElements = getVisibleFocusableElements();
 
+        function updateVisibleElements() {
+            visibleFocusableElements = getVisibleFocusableElements();
+            if (focusedIndex >= visibleFocusableElements.length) {
+                focusedIndex = visibleFocusableElements.length > 0 ? visibleFocusableElements.length - 1 : 0;
+            }
+            focusElement(focusedIndex);
+        }
 
-  });
+        function focusElement(index) {
+            visibleFocusableElements.forEach(el => el.classList.remove('focused'));
+            if (visibleFocusableElements[index]) {
+                visibleFocusableElements[index].classList.add('focused');
+                visibleFocusableElements[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+            }
+        }
 
-  // If gamepad is already connected on load
-  if (navigator.getGamepads && navigator.getGamepads()[0]) {
-    gamepadLoop();
-    gamepadConnected = true;
-  } else {
-    // Apply the style even if no gamepad is initially connected
-    const initialFocusedElement = focusableElements[focusedIndex];
-    if (initialFocusedElement) {
-      initialFocusedElement.classList.add('focused');
-    }
-  }
-;
-</script>
+        function activateElement(index) {
+            if (visibleFocusableElements[index]) {
+                visibleFocusableElements[index].click();
+            }
+        }
+
+        // Initial focus on a visible element
+        updateVisibleElements();
+
+        function openNav() {
+            if (sidePanel) {
+                sidePanel.style.width = "250px";
+            }
+            const overlay = document.getElementById("overlay");
+            if (overlay) {
+                overlay.style.display = "block";
+            }
+            sidePanelOpen = true;
+            updateVisibleElements();
+            focusedIndex = 0; // Focus on the first element in the side panel
+            focusElement(focusedIndex);
+        }
+
+        function closeNav() {
+            if (sidePanel) {
+                sidePanel.style.width = "0";
+            }
+            const overlay = document.getElementById("overlay");
+            if (overlay) {
+                overlay.style.display = "none";
+            }
+            sidePanelOpen = false;
+            updateVisibleElements();
+            focusedIndex = 0; // Reset focus to the main content
+            focusElement(focusedIndex);
+        }
+
+        // Gamepad polling loop
+        function gamepadLoop() {
+            const now = Date.now();
+            const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+            const gp = gamepads[0];
+
+            if (gp) {
+                gamepadConnected = true;
+                const threshold = 0.5;
+                const stickY = gp.axes[1];
+                const up = gp.buttons[12]?.pressed || stickY < -threshold;
+                const down = gp.buttons[13]?.pressed || stickY > threshold;
+                const left = gp.buttons[14]?.pressed || gp.axes[0] < -threshold;
+                const right = gp.buttons[15]?.pressed || gp.axes[0] > threshold;
+                const buttonB = gp.buttons[1]?.pressed; // 'B' button is typically index 1
+
+                if (sidePanelOpen && buttonB) {
+                    closeNav();
+                    lastMoveTime = now;
+                } else if (now - lastMoveTime > 200) {
+                    if (up) {
+                        focusedIndex = (focusedIndex - 1 + visibleFocusableElements.length) % visibleFocusableElements.length;
+                        focusElement(focusedIndex);
+                        lastMoveTime = now;
+                    } else if (down) {
+                        focusedIndex = (focusedIndex + 1) % visibleFocusableElements.length;
+                        focusElement(focusedIndex);
+                        lastMoveTime = now;
+                    } else if (left) {
+                        focusedIndex = (focusedIndex - 1 + visibleFocusableElements.length) % visibleFocusableElements.length;
+                        focusElement(focusedIndex);
+                        lastMoveTime = now;
+                    } else if (right) {
+                        focusedIndex = (focusedIndex + 1) % visibleFocusableElements.length;
+                        focusElement(focusedIndex);
+                        lastMoveTime = now;
+                    }
+                }
+
+                if (gp.buttons[0]?.pressed) {
+                    activateElement(focusedIndex);
+                    lastMoveTime = now;
+                }
+            } else {
+                gamepadConnected = false;
+            }
+            requestAnimationFrame(gamepadLoop);
+        }
+
+        window.addEventListener('gamepadconnected', () => {
+            gamepadLoop();
+        });
+
+        window.addEventListener('gamepaddisconnected', () => {
+            gamepadConnected = false;
+        });
+
+        // Call updateVisibleElements when the window is resized (viewport might change)
+        window.addEventListener('resize', updateVisibleElements);
+
+        // Initial call if gamepad is already connected
+        if (navigator.getGamepads && navigator.getGamepads()[0]) {
+            gamepadLoop();
+            gamepadConnected = true;
+        }
+    })();
+
 </script>
 <script src="/script.js"></script>
 
