@@ -310,14 +310,16 @@ body {
   padding: 5px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
   transition: transform 0.3s, box-shadow 0.3s;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
+
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transform: scale(1);
   transition: transform 0.3s ease;
   /* Smooth scale transition */
+  aspect-ratio: 1 / 1; /* Make it a square */
 }
 
 .info {
@@ -416,6 +418,11 @@ body {
   background: none;
   cursor: pointer;
   padding: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .hmbutton {
@@ -632,7 +639,8 @@ body {
   margin-bottom: 2vw;
   flex-wrap: wrap;
   margin-top: 10%;
-  justify-content: center;
+  margin-left: 3.5%;
+  justify-content: left;
 }
 
 .search-bar {
