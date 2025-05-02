@@ -86,7 +86,15 @@
     </div>
     <div class="game-card"><button id="cxPro" class="game-button">
       <img src="/cxpicon.png" alt="cixPx"></button></div>
+      
+      <div class="game-card">
+      <button id="eagle12" class="game-button">
+        <img src="" alt="Minecraft 1.12" />
+      </button>
+    </div>
+      
   </div>
+  
   <div class="info">
     <div class="info-card">
       <h2>About</h2>
@@ -263,9 +271,13 @@ const body = document.body; // Or another relevant parent element
     });
 
     document.getElementById('cxPro').addEventListener('click', function () {
-      setCookie('lastGame', 'cxPr', 30);
+      setCookie('lastGame', 'cxpro', 30);
       window.location.href = '/launch.html';
     });
+    
+    document.getElementById('eagle12').addEventListener('click', function () {
+      setCookie('lastGame', 'eagle12', 30);
+      window.location.href = '/launch.html';
   
     play.addEventListener('click', function () {
       window.location.href = '/launch.html';
