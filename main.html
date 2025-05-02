@@ -247,39 +247,26 @@ const body = document.body; // Or another relevant parent element
     }
 
     // When user clicks a game button, set the cookie and redirect to launch page
-    document.getElementById('eaglercraft-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'Eaglercraft', 30);
-      window.location.href = '/launch.html';
-    });
+const games = {
+  'eaglercraft-btn': 'Eaglercraft',
+  'cattle-btn': 'cattle',
+  'gamec-btn': 'frlgnds',
+  'egg': 'egg',
+  'm3xbtn': 'm3x',
+  'cxPro': 'cxpro',
+  'eagle12': 'eagle12'
+};
 
-    document.getElementById('cattle-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'cattle', 30);
+Object.entries(games).forEach(([btnId, gameName]) => {
+  const btn = document.getElementById(btnId);
+  if (btn) {
+    btn.addEventListener('click', function () {
+      setCookie('lastGame', gameName, 30);
       window.location.href = '/launch.html';
     });
+  }
+});
 
-    document.getElementById('gamec-btn').addEventListener('click', function () {
-      setCookie('lastGame', 'frlgnds', 30);
-      window.location.href = '/launch.html';
-    });
-
-    document.getElementById('egg').addEventListener('click', function () {
-      setCookie('lastGame', 'egg', 30);
-      window.location.href = '/launch.html';
-    });
-
-    document.getElementById('m3xbtn').addEventListener('click', function () {
-      setCookie('lastGame', 'm3x', 30);
-      window.location.href = '/launch.html';
-    });
-
-    document.getElementById('cxPro').addEventListener('click', function () {
-      setCookie('lastGame', 'cxpro', 30);
-      window.location.href = '/launch.html';
-    });
-    
-    document.getElementById('eagle12').addEventListener('click', function () {
-      setCookie('lastGame', 'eagle12', 30);
-      window.location.href = '/launch.html';
   
     play.addEventListener('click', function () {
       window.location.href = '/launch.html';
