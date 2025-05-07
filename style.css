@@ -513,7 +513,25 @@ body {
   /* Absolute maximum size */
   height: auto;
   /* Maintain aspect ratio */
+  z-index: 2;
 
+}
+
+.gameLaunchBG {
+  position: absolute;
+  left: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  animation: fadeExit2 4s ease-in-out forwards;
+  top: 50%;
+  /* Improved sizing logic */
+  min-width: 60px;
+  /* Absolute minimum size */
+  max-width: 300px;
+  /* Absolute maximum size */
+  height: auto;
+  /* Maintain aspect ratio */
+  z-index: 1;
 }
 
 @keyframes fadeExit {
@@ -538,6 +556,29 @@ body {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0);
     /* shrink to nothing */
+  }
+}
+
+@keyframes fadeExit2 {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 1;
+   
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.6));
+  }
+
+  60% {
+    opacity: 0;
+    filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.8));
+  }
+
+  100% {
+    opacity: 0;
+  
   }
 }
 
