@@ -1,0 +1,221 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CW1</title>
+
+  <meta name="description" content="CW1 Assets">
+
+  <meta property="og:image" content="/New Project (12) (1).png" />
+  <meta property="og:site_name" content="CW1 Assets" />
+  <meta property="og:locale" content="en_US" />
+
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="CW1 Assets">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#131212">
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+
+</head>
+<canvas id="dotCanvas"></canvas>
+<body>
+  <div id="overlay" class="overlay" onclick="closeNav()"></div>
+
+
+  <nav class="xbox-navbar">
+    <div class="navbar-left">
+      <a href="/" class="home-but">
+        <img src="logo.png" alt="Home" class="home-icon">
+      </a>
+    </div>
+    <div class="navbar-center">
+      
+    </div>
+    <div class="navbar-right">
+      <span class="clock" id="clock">--:-- -m</span>
+    </div>
+  </nav>
+
+  
+    
+  <div class="content">
+    <div>
+      <h2>Error</h2>
+      <p>Couldn't find page...</p>
+    </div>
+   <button class="hmbutton"><a href="/main.html">Games</a></button>
+  </div>
+
+  <p class="search-bar" id='search-bar'style="display: none;">Working on it</p>
+
+  <div id="cover" class="covers"></div>
+  <div id="mySidepanel" class="side-panel">
+  
+    <a href="javascript:void(0)"  onclick="closeNav()">&times;</a>
+    <a href="#">Home</a>
+    <a href="#">Games</a>
+    <a href="#">Chat</a>
+    <a onclick="settings()">Settings</a>
+</div>
+<div id="SideMenu" class="side-menu">
+  
+ <p>WIP</p>
+</div>
+  
+
+  
+
+
+  <script>
+    function updateTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'pm' : 'am';
+
+      hours = hours % 12;
+      hours = hours ? hours : 12; // 0 becomes 12
+
+      const timeString = `${hours}:${minutes} ${ampm}`;
+      document.getElementById("clock").textContent = timeString;
+    }
+
+    updateTime();
+    setInterval(updateTime, 1000);
+
+  </script>
+ 
+  
+ <script>
+  (function () {
+      // Gather all focusable elements: game cards and nav/icon buttons
+      const focusableSelectors = [
+          '.game-button',
+          '.nav-icon',
+          '.home-but',
+          '.side-panel a',
+          '.hmbutton a' // Include the link inside the home button
+      ];
+      const focusableElements = Array.from(document.querySelectorAll(focusableSelectors.join(',')));
+      let focusedIndex = 0;
+      let lastMoveTime = 0;
+      let gamepadConnected = false;
+
+      // Add CSS for focus highlight
+      const style = document.createElement('style');
+      style.textContent = `
+      .focused {
+          transform: translateY(-5px) scale(1.05);
+          box-shadow: 0 0px 12px rgba(255, 255, 255, 0.801);
+          filter: brightness(1.005);
+          outline: none; /* Remove default focus outline */
+      }
+      `;
+      document.head.appendChild(style);
+
+      function focusElement(index) {
+          focusableElements.forEach(el => el.classList.remove('focused'));
+          if (focusableElements[index]) {
+              focusableElements[index].classList.add('focused');
+              // Optionally scroll into view if offscreen
+              if (typeof focusableElements[index].scrollIntoView === 'function') {
+                  focusableElements[index].scrollIntoView({ block: 'nearest', inline: 'nearest' });
+              }
+          }
+      }
+
+      function activateElement(index) {
+          const el = focusableElements[index];
+          if (el) {
+              el.click();
+          }
+      }
+
+      // Initial focus
+      focusElement(focusedIndex);
+
+      // Gamepad polling loop
+      function gamepadLoop() {
+          const now = Date.now();
+          const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+          const gp = gamepads[0];
+
+          if (gp) {
+              gamepadConnected = true;
+              // D-pad/left stick navigation (debounced to avoid rapid skipping)
+              const threshold = 0.5;
+              const stickY = gp.axes[1];
+              const up = gp.buttons[12]?.pressed || stickY < -threshold;
+              const down = gp.buttons[13]?.pressed || stickY > threshold;
+              const left = gp.buttons[14]?.pressed || gp.axes[0] < -threshold;
+              const right = gp.buttons[15]?.pressed || gp.axes[0] > threshold;
+
+              if (now - lastMoveTime > 200) { // 200ms debounce
+                  if (up) {
+                      focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  } else if (down) {
+                      focusedIndex = (focusedIndex + 1) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  } else if (left) {
+                      focusedIndex = (focusedIndex - 1 + focusableElements.length) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  } else if (right) {
+                      focusedIndex = (focusedIndex + 1) % focusableElements.length;
+                      focusElement(focusedIndex);
+                      lastMoveTime = now;
+                  }
+              }
+
+              // "A" button (button 0) to activate
+              if (gp.buttons[0]?.pressed) {
+                  activateElement(focusedIndex);
+                  lastMoveTime = now; // Prevent multiple rapid activations
+              }
+          } else {
+              gamepadConnected = false;
+          }
+          requestAnimationFrame(gamepadLoop);
+      }
+
+      window.addEventListener('gamepadconnected', () => {
+          gamepadLoop();
+      });
+
+      window.addEventListener('gamepaddisconnected', () => {
+          gamepadConnected = false;
+      });
+
+
+  })();
+
+  // If gamepad is already connected on load
+  if (navigator.getGamepads && navigator.getGamepads()[0]) {
+      gamepadLoop();
+      gamepadConnected = true;
+
+  }
+  ;
+</script>
+
+<script src="/script.js"></script>
+
+
+</body>
+
+</html>

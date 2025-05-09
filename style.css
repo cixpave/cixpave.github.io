@@ -21,10 +21,43 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+  background-color: rgba(0, 0, 0, 0.5); /* Black w/ opacity */
   z-index: 12; /* Below the side panel */
   cursor: pointer;
   display: none; /* Hidden by default */
+}
+
+#setup {
+  width: 45%;
+  height: 35%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f9f9f9;
+  border-radius: 30px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+  z-index: 13;
+  display: flex; /* Enable flexbox for positioning children */
+  flex-direction: row; /* Arrange children in a row */
+}
+
+#splitCont {
+  width: 30%; /* Adjust as needed */
+  height: 100%;
+  background-color: #020202;
+  margin-left: auto; /* Push it to the right */
+  border-radius: 0 30px 30px 0; /* Apply right side rounding */
+}
+
+/* If you have other content inside #setup that should take up the left space */
+#setup > *:not(#splitCont) {
+  flex-grow: 1; /* Allow other elements to take up remaining space */
+}
+
+#headText {
+  padding-left: 5%;
+  color: rgba(0, 0, 0, 0.746);
 }
 
 .launchScreen {
@@ -56,6 +89,23 @@ body {
   100% {
     opacity: 0;
   }
+}
+
+.iframe-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+ 
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 8px;
 }
 
 .floatText {

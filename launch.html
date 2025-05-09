@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Play</title>
+<title>App</title>
 
 <meta property="og:image" content="New Project (12) (1).png" />
 <meta property="og:site_name" content="CW1 Assets" />
@@ -27,6 +27,7 @@
 />
 <meta name="theme-color" content="#131212" />
 </head>
+
 <body>
   <div class="gameLaunch">
     <img
@@ -37,6 +38,10 @@
     />
   </div>
  
+  <div class="iframe-container">
+    <iframe id="gameFrame"  title="App" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
+  </div>
 
 
   <script>
@@ -50,41 +55,47 @@
 
     window.onload = function () {
       const lastGame = getCookie('lastGame');
+      const iframe = document.getElementById('gameFrame');
+      const container = document.getElementById('.iframe-container')
+
 
       if (lastGame) {
   setTimeout(function () {
+    let gameUrl = 'main'; // Default URL
+
     switch (lastGame) {
+      
       case 'Eaglercraft':
-        window.location.href = '/mc';
+        gameUrl = 'assets/mc.html';
         break;
       case 'cattle':
-        window.location.href = '/sheep';
+        gameUrl = 'assets/sheep.html';
         break;
       case 'frlgnds':
-        window.location.href = '/legends';
+        gameUrl = 'assets/legends.html';
         break;
       case 'egg':
-        window.location.href = '/drive';
+        gameUrl = 'assets/drive.html';
         break;
       default:
-        window.location.href = '/main';
+        gameUrl = 'assets/main.html';
         break;
       case 'cxpro':
-        window.location.href = '/cxpro';
+        gameUrl = 'assets/cxpro.html';
         break;
       case 'eagle12':
-        window.location.href = '/eagle';
+        gameUrl = 'assets/eagle.html';
         break;
+       
     }
+    iframe.src = gameUrl;
+    
   }, 3000);
 }
     };
     document.addEventListener('keydown', function (event) {
 
-  if (event.key === 'Backspace' && !['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
-    event.preventDefault(); // Prevent default back navigation
-    window.location.href = '/main';
-  }
+ 
 });
   </script>
 </body>
