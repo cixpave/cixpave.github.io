@@ -45,6 +45,7 @@
 
 
   <script>
+    // Function to get the value of a cookie
     function getCookie(name) {
       const match = document.cookie.match(
         new RegExp('(^| )' + name + '=([^;]+)')
@@ -52,51 +53,61 @@
       if (match) return decodeURIComponent(match[2]);
       return null;
     }
-
+  
+    // When the window has loaded, perform actions
     window.onload = function () {
       const lastGame = getCookie('lastGame');
       const iframe = document.getElementById('gameFrame');
-      const container = document.getElementById('.iframe-container')
-
-
+      const container = document.querySelector('.iframe-container'); // Fix here: Use querySelector for classes
+  
+      // If we have a last game, set up the iframe URL based on the cookie
       if (lastGame) {
-  setTimeout(function () {
-    let gameUrl = 'main'; // Default URL
-
-    switch (lastGame) {
-      
-      case 'Eaglercraft':
-        gameUrl = 'assets/mc.html';
-        break;
-      case 'cattle':
-        gameUrl = 'assets/sheep.html';
-        break;
-      case 'frlgnds':
-        gameUrl = 'assets/legends.html';
-        break;
-      case 'egg':
-        gameUrl = 'assets/drive.html';
-        break;
-      default:
-        gameUrl = 'assets/main.html';
-        break;
-      case 'cxpro':
-        gameUrl = 'assets/cxpro.html';
-        break;
-      case 'eagler':
-        gameUrl = 'assets/eagle.html';
-        break;
-       
-    }
-    iframe.src = gameUrl;
-    
-  }, 3000);
-}
+        setTimeout(function () {
+          let gameUrl = 'main'; // Default URL if no matching game is found
+  
+          // Switch based on the last game stored in the cookie
+          switch (lastGame) {
+            case 'Eaglercraft':
+              gameUrl = '/assets/mc.html';
+              break;
+            case 'cattle':
+              gameUrl = '/assets/sheep.html';
+              break;
+            case 'frlgnds':
+              gameUrl = '/assets/legends.html';
+              break;
+            case 'egg':
+              gameUrl = '/assets/drive.html';
+              break;
+            case 'cxpro': // Fixed position of the 'cxpro' case
+              gameUrl = '/assets/cxpro.html';
+              break;
+            case 'eagler':
+              gameUrl = '/assets/eagle.html';
+              break;
+            case 'poker':
+              gameUrl = '/assets/poke.html';
+              break;
+            case 'dta':
+              gameUrl = '/assets/dta.html'
+              break;
+            default:
+              gameUrl = '/error.html'; // Default error URL if no match
+              break;
+          }
+  
+          // Set the iframe source to the appropriate game URL
+          iframe.src = gameUrl;
+  
+        }, 3000); // 3-second delay (adjust as needed)
+      }
     };
+  
+    // Optional: Empty keydown event listener (remove if unnecessary)
     document.addEventListener('keydown', function (event) {
-
- 
-});
+      // Placeholder for keydown actions (if needed)
+    });
   </script>
+  
 </body>
 </html>
