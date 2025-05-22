@@ -668,8 +668,8 @@
   
   
   .home-icon {
-    width: 36px;
-    height: 36px;
+    width: 10%;
+    height: 10%;
   }
   
   
@@ -904,6 +904,11 @@
     color: white;
     flex-grow: 1; /* Allow input to take up remaining space */
     aspect-ratio: auto; /* Allow height to adjust based on content */
+  
+  }
+
+  .search-bar:focus, input:focus{
+    outline: none;
   }
   
   .nav-icon#settings {
