@@ -23,10 +23,7 @@
   <meta name="apple-mobile-web-app-title" content="CW1 Assets">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#131212">
-  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-icons/siimple-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple-icons/siimple-icons.css" />
 </head>
 <canvas id="dotCanvas"></canvas>
 <body>
@@ -498,58 +495,6 @@ window.addEventListener("gamepaddisconnected", (e) => {
   </script>
 <script src="/script.js"></script>
 
-<script>firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const auth = firebase.auth();
-
-// Sign in anonymously
-auth.signInAnonymously().catch(console.error);
-
-// Send Message
-document.getElementById('send-btn').addEventListener('click', () => {
-  const input = document.getElementById('chat-input');
-  const message = input.value.trim();
-  if (message) {
-    db.collection('messages').add({
-      text: message,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    input.value = '';
-  }
-});
-
-// Listen for new messages
-db.collection('messages').orderBy('timestamp').onSnapshot(snapshot => {
-  const chatBox = document.getElementById('chat-box');
-  chatBox.innerHTML = '';
-  snapshot.forEach(doc => {
-    const msg = doc.data();
-    const p = document.createElement('p');
-    p.textContent = msg.text;
-    chatBox.appendChild(p);
-  });
-  chatBox.scrollTop = chatBox.scrollHeight;
-});</script>
-  
-<script type="module">
-  // Import the functions you need from the SDKs you need
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.0/firebase-app.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
-
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyArXo_zIlY1e7QS_Ac-P4WlKWL06dVNGV4",
-    authDomain: "cw1chat.firebaseapp.com",
-    projectId: "cw1chat",
-    storageBucket: "cw1chat.firebasestorage.app",
-    messagingSenderId: "1009102905498",
-    appId: "1:1009102905498:web:ea63ef1e5668dddff1ff23"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-</script>
 </body>
 
 </html>
