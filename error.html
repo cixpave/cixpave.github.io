@@ -1,105 +1,92 @@
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CW1</title>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CW1</title>
+    <meta name="description" content="CW1 Assets" />
 
-  <meta name="description" content="CW1 Assets">
+    <meta property="og:image" content="/New Project (12) (1).png" />
+    <meta property="og:site_name" content="CW1 Assets" />
+    <meta property="og:locale" content="en_US" />
 
-  <meta property="og:image" content="/New Project (12) (1).png" />
-  <meta property="og:site_name" content="CW1 Assets" />
-  <meta property="og:locale" content="en_US" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" type="image/x-icon" href="New Project (12) (1).png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="CW1 Assets" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta name="theme-color" content="#131212" />
+  </head>
+  <canvas id="dotCanvas"></canvas>
+  <body>
+    <div id="overlay" class="overlay" onclick="closeNav()"></div>
 
-  <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/x-icon" href="New Project (12) (1).png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="CW1 Assets">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#131212">
+    <nav class="xbox-navbar">
+      <div class="navbar-left">
+        <a href="/" class="home-but">
+          <img src="/content/logo.png" alt="Home" class="home-icon" />
+        </a>
+      </div>
+      <div class="navbar-center"></div>
+      <div class="navbar-right">
+        <span class="clock" id="clock">--:-- -m</span>
+      </div>
+    </nav>
 
-</head>
-<canvas id="dotCanvas"></canvas>
-<body>
-  <div id="overlay" class="overlay" onclick="closeNav()"></div>
-
-
-  <nav class="xbox-navbar">
-    <div class="navbar-left">
-      <a href="/" class="home-but">
-        <img src="/content/logo.png" alt="Home" class="home-icon">
-      </a>
+    <div class="content">
+      <div>
+        <h2>Error</h2>
+        <p>Couldn't find page...</p>
+      </div>
+      <button class="hmbutton"><a href="/main.html">Games</a></button>
     </div>
-    <div class="navbar-center">
-      
+
+    <p class="search-bar" id="search-bar" style="display: none">
+      Working on it
+    </p>
+
+    <div id="cover" class="covers"></div>
+    <div id="mySidepanel" class="side-panel">
+      <a href="javascript:void(0)" onclick="closeNav()">&times;</a>
+      <a href="#">Home</a>
+      <a href="#">Games</a>
+      <a href="#">Chat</a>
+      <a onclick="settings()">Settings</a>
     </div>
-    <div class="navbar-right">
-      <span class="clock" id="clock">--:-- -m</span>
+    <div id="SideMenu" class="side-menu">
+      <p>WIP</p>
     </div>
-  </nav>
 
-  
-    
-  <div class="content">
-    <div>
-      <h2>Error</h2>
-      <p>Couldn't find page...</p>
-    </div>
-   <button class="hmbutton"><a href="/main.html">Games</a></button>
-  </div>
+    <script>
+      function updateTime() {
+        const now = new Date();
+        let hours = now.getHours();
+        const minutes = now.getMinutes().toString().padStart(2, "0");
+        const ampm = hours >= 12 ? "pm" : "am";
 
-  <p class="search-bar" id='search-bar'style="display: none;">Working on it</p>
+        hours = hours % 12;
+        hours = hours ? hours : 12; // 0 becomes 12
 
-  <div id="cover" class="covers"></div>
-  <div id="mySidepanel" class="side-panel">
-  
-    <a href="javascript:void(0)"  onclick="closeNav()">&times;</a>
-    <a href="#">Home</a>
-    <a href="#">Games</a>
-    <a href="#">Chat</a>
-    <a onclick="settings()">Settings</a>
-</div>
-<div id="SideMenu" class="side-menu">
-  
- <p>WIP</p>
-</div>
-  
+        const timeString = `${hours}:${minutes} ${ampm}`;
+        document.getElementById("clock").textContent = timeString;
+      }
 
-  
+      updateTime();
+      setInterval(updateTime, 1000);
+    </script>
 
-
-  <script>
-    function updateTime() {
-      const now = new Date();
-      let hours = now.getHours();
-      const minutes = now.getMinutes().toString().padStart(2, '0');
-      const ampm = hours >= 12 ? 'pm' : 'am';
-
-      hours = hours % 12;
-      hours = hours ? hours : 12; // 0 becomes 12
-
-      const timeString = `${hours}:${minutes} ${ampm}`;
-      document.getElementById("clock").textContent = timeString;
-    }
-
-    updateTime();
-    setInterval(updateTime, 1000);
-
-  </script>
- 
-  
-
-
-<script src="/script.js"></script>
-
-
-</body>
-
+    <script src="/script.js"></script>
+  </body>
 </html>
